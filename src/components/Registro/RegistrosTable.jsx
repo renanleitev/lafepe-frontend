@@ -5,6 +5,7 @@ import { getRegistros } from '../../store/modules/registros/reducer';
 import Loading from '../Loading/LoadingContainer';
 import fetchStatus from '../../config/fetchStatus';
 import convertObjectToArray from '../../hooks/convertObjectToArray';
+import convertDate from '../../hooks/convertDate';
 
 function ProdutosTable() {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ function ProdutosTable() {
     { label: 'Saida Quantidade', renderCell: (item) => item.saidaQuantidade },
     { label: 'Saldo Quantidade Inicial', renderCell: (item) => item.saldoQuantidadeInicial },
     { label: 'Saldo Quantidade Final', renderCell: (item) => item.saldoQuantidadeFinal },
-    { label: 'Data', renderCell: (item) => item.data },
+    { label: 'Data', renderCell: (item) => convertDate(item.data) },
   ];
 
   useEffect(() => {

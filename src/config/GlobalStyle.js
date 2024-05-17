@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import { injectStyle } from 'react-toastify/dist/inject-style';
 import * as colors from './colors';
 
@@ -11,7 +11,7 @@ export default createGlobalStyle`
         box-sizing: border-box;
     }
     body {
-        font-family: sans-serif;
+        font-family: Roboto;
         color: ${colors.primaryDarkColor};
         background-color: ${colors.primaryWhiteColor};
     }
@@ -45,5 +45,47 @@ export default createGlobalStyle`
         margin-top: 50px;
         background-color: ${colors.errorColor};
         color: white;
+    }
+`;
+
+export const Form = styled.form`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    h1, h2{
+        text-align: center;
+    }
+    .link{
+        margin-top: 10px;
+        font-size: 12px;
+    }
+    .link:hover{
+        color: ${colors.infoColor};
+    }
+    label {
+        font-size: larger;
+        font-weight: bolder;
+        text-align: center;
+        margin-right: 10px;
+        margin-top: 15px;
+        width: 250px;
+    }
+    input {
+        border: none;
+        outline: none;
+        width: 250px;
+        padding-top: 5px;
+        border-bottom: 1px solid ${colors.primaryDarkColor};
+        border-radius: 0;
+    }
+    button {
+        border-radius: 20px;
+        margin: 20px auto;
+    }
+    button:hover{
+        background-color: ${colors.infoColor};
     }
 `;

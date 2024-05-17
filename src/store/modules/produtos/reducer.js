@@ -63,6 +63,17 @@ export const createProduto = createAsyncThunk(
   },
 );
 
+export const deleteProduto = createAsyncThunk(
+  'produtos/deleteProduto',
+  async (produto) => {
+    try {
+      const produtoCreated = await axiosInstance.delete(baseProdutosURL, produto);
+      toast.success('Produto deletado com sucesso.');
+      return produtoCreated;
+    } catch (error) { return error.message; }
+  },
+);
+
 export const searchProdutoByNome = createAsyncThunk(
   'produtos/searchProdutoByNome',
   async (nome) => {
@@ -150,6 +161,19 @@ export const produtosSlice = createSlice({
       )
       .addCase(editProduto.pending, (state) => { state.status = fetchStatus.PENDING; })
       .addCase(editProduto.rejected, (state, action) => {
+        state.status = fetchStatus.ERROR;
+        state.error = action.error.message || 'Something went wrong';
+      })
+    // Delete Produto
+      .addCase(
+        deleteProduto.fulfilled,
+        (state) => {
+          state.status = fetchStatus.SUCCESS;
+          state.produto = initialProduto;
+        },
+      )
+      .addCase(deleteProduto.pending, (state) => { state.status = fetchStatus.PENDING; })
+      .addCase(deleteProduto.rejected, (state, action) => {
         state.status = fetchStatus.ERROR;
         state.error = action.error.message || 'Something went wrong';
       })

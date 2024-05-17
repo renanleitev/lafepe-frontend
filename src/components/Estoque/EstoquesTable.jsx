@@ -5,6 +5,7 @@ import { getEstoques } from '../../store/modules/estoques/reducer';
 import Loading from '../Loading/LoadingContainer';
 import fetchStatus from '../../config/fetchStatus';
 import convertObjectToArray from '../../hooks/convertObjectToArray';
+import convertDate from '../../hooks/convertDate';
 
 function EstoquesTable() {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ function EstoquesTable() {
     { label: 'Preço Unitário', renderCell: (item) => item.produto.precoUnitario },
     {
       label: 'Validade',
-      renderCell: (item) => item.validade,
+      renderCell: (item) => convertDate(item.validade),
     },
     { label: 'Descrição', renderCell: (item) => item.descricao },
     { label: 'Produto', renderCell: (item) => item.produto.nome },

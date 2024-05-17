@@ -12,7 +12,7 @@ function ProdutosTable() {
   const produtos = convertObjectToArray(useSelector((state) => state.produtos.produtos)) || [];
 
   const columns = [
-    { label: 'Codigo', renderCell: (item) => item.codigo },
+    { label: 'Código', renderCell: (item) => item.codigo },
     { label: 'Nome', renderCell: (item) => item.nome },
     { label: 'Fabricante', renderCell: (item) => item.fabricante },
     { label: 'Preço', renderCell: (item) => item.precoUnitario },

@@ -1,35 +1,15 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { CompactTable } from '@table-library/react-table-library/compact';
-import { useTheme } from '@table-library/react-table-library/theme';
-import { getTheme } from '@table-library/react-table-library/baseline';
+import Table from '../Table/Table';
 import { getEstoques } from '../../store/modules/estoques/reducer';
-import Loading from '../../components/Loading/LoadingContainer';
+import Loading from '../Loading/LoadingContainer';
 import fetchStatus from '../../config/fetchStatus';
+import convertObjectToArray from '../../hooks/convertObjectToArray';
 
 function EstoquesTable() {
   const dispatch = useDispatch();
   const isLoading = useSelector((state) => state.estoques.status);
-  const nodes = useSelector((state) => state.estoques.estoques) || [];
-  const data = { nodes };
-
-  const theme = useTheme([
-    getTheme(),
-    {
-      HeaderRow: `
-        background-color: #eaf5fd;
-      `,
-      Row: `
-        &:nth-of-type(odd) {
-          background-color: #d2e9fb;
-        }
-
-        &:nth-of-type(even) {
-          background-color: #eaf5fd;
-        }
-      `,
-    },
-  ]);
+  const estoques = convertObjectToArray(useSelector((state) => state.estoques.estoques)) || [];
 
   const columns = [
     { label: 'Lote', renderCell: (item) => item.lote },
@@ -44,6 +24,9 @@ function EstoquesTable() {
       renderCell: (item) => item.validade,
     },
     { label: 'Descrição', renderCell: (item) => item.descricao },
+    { label: 'Produto', renderCell: (item) => item.produto.nome },
+    { label: 'Fabricante', renderCell: (item) => item.produto.fabricante },
+    { label: 'Preço Unitário', renderCell: (item) => item.produto.precoUnitario },
   ];
 
   useEffect(() => {
@@ -52,8 +35,13 @@ function EstoquesTable() {
 
   return (
     <div>
-      {isLoading === fetchStatus.PENDING && nodes.length > 1
-        ? <Loading /> : <CompactTable data={data} columns={columns} theme={theme} />}
+      {isLoading === fetchStatus.PENDING && estoques.length > 1
+        ? <Loading /> : (
+          <Table
+            data={estoques}
+            columns={columns}
+          />
+        )}
     </div>
   );
 }

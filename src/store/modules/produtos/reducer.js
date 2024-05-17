@@ -15,8 +15,8 @@ export const initialProduto = {
 const initialState = {
   status: fetchStatus.IDLE,
   error: '',
-  produtos: [],
   produto: initialProduto,
+  produtos: [initialProduto],
 };
 
 export const getProdutos = createAsyncThunk(
@@ -159,13 +159,13 @@ export const produtosSlice = createSlice({
         getProdutos.fulfilled,
         (state, action) => {
           state.status = fetchStatus.SUCCESS;
-          state.produtos = { ...action.payload };
+          state.produtos = action.payload;
         },
       )
       .addCase(getProdutos.pending, (state) => { state.status = fetchStatus.PENDING; })
       .addCase(getProdutos.rejected, (state, action) => {
         state.status = fetchStatus.ERROR;
-        state.error = action.error.message || 'Something went wrong';
+        state.error = action.error.message || 'Algo deu errado';
       })
       // Preço
       .addCase(searchProdutoByPreco.fulfilled, (state, action) => {

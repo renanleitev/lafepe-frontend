@@ -24,9 +24,7 @@ export const getProdutos = createAsyncThunk(
   async () => {
     try {
       const response = await axiosInstance.get(baseProdutosURL);
-      return {
-        data: response.data,
-      };
+      return response.data;
     } catch (error) { return error.message; }
   },
 );
@@ -71,9 +69,7 @@ export const searchProdutoByNome = createAsyncThunk(
     try {
       const url = `/${baseProdutosURL}/query?nome=${nome}}`;
       const response = await axiosInstance.get(url);
-      return {
-        data: response.data,
-      };
+      return response.data;
     } catch (error) { return error.message; }
   },
 );
@@ -84,9 +80,7 @@ export const searchProdutoByCodigo = createAsyncThunk(
     try {
       const url = `/${baseProdutosURL}/query?codigo=${codigo}`;
       const response = await axiosInstance.get(url);
-      return {
-        data: response.data,
-      };
+      return response.data;
     } catch (error) { return error.message; }
   },
 );
@@ -97,22 +91,18 @@ export const searchProdutoByFabricante = createAsyncThunk(
     try {
       const url = `/${baseProdutosURL}/query?fabricante=${fabricante}}`;
       const response = await axiosInstance.get(url);
-      return {
-        data: response.data,
-      };
+      return response.data;
     } catch (error) { return error.message; }
   },
 );
 
-export const searchProdutotByPreco = createAsyncThunk(
-  'produtos/searchProdutotByPreco',
+export const searchProdutoByPreco = createAsyncThunk(
+  'produtos/searchProdutoByPreco',
   async (preco, operador) => {
     try {
       const url = `/${baseProdutosURL}/query?price=${preco}&operador=${operador}`;
       const response = await axiosInstance.get(url);
-      return {
-        data: response.data,
-      };
+      return response.data;
     } catch (error) { return error.message; }
   },
 );
@@ -178,12 +168,12 @@ export const produtosSlice = createSlice({
         state.error = action.error.message || 'Something went wrong';
       })
       // Preço
-      .addCase(searchProdutotByPreco.fulfilled, (state, action) => {
+      .addCase(searchProdutoByPreco.fulfilled, (state, action) => {
         state.status = fetchStatus.SUCCESS;
         state.produtos = action.payload;
       })
-      .addCase(searchProdutotByPreco.pending, (state) => { state.status = fetchStatus.PENDING; })
-      .addCase(searchProdutotByPreco.rejected, (state, action) => {
+      .addCase(searchProdutoByPreco.pending, (state) => { state.status = fetchStatus.PENDING; })
+      .addCase(searchProdutoByPreco.rejected, (state, action) => {
         state.status = fetchStatus.FAILURE;
         state.error = action.error.message || 'Algo deu errado';
       })

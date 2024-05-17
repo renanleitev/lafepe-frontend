@@ -2,11 +2,10 @@ import styled from 'styled-components';
 import * as colors from '../../config/colors';
 
 export const BarFooter = styled.div`
-    background-color: ${colors.primaryColor};
+    background-color: ${colors.primaryWhiteColor};
     position: fixed;
     bottom: 0;
     width: 100%;
-    height: 50px;
     display: flex;
     align-items: center;
     p {
@@ -25,7 +24,7 @@ export const BarFooter = styled.div`
 function Footer() {
   return (
     <BarFooter>
-      <img src="https://www.lafepe.pe.gov.br/wp-content/uploads/2016/11/img-logo-lafepe-topo-ataulizado.jpg" alt="new" />
+      <img height="50px" src="https://www.lafepe.pe.gov.br/wp-content/uploads/2016/11/img-logo-lafepe-topo-ataulizado.jpg" alt="new" />
     </BarFooter>
   );
 }

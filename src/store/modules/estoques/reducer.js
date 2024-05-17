@@ -24,7 +24,7 @@ const initialState = {
   status: fetchStatus.IDLE,
   error: '',
   estoque: initialEstoque,
-  estoques: [],
+  estoques: [initialEstoque],
 };
 
 export const getEstoques = createAsyncThunk(
@@ -32,9 +32,7 @@ export const getEstoques = createAsyncThunk(
   async () => {
     try {
       const response = await axiosInstance.get(baseEstoquesURL);
-      return {
-        data: response.data,
-      };
+      return response.data;
     } catch (error) { return error.message; }
   },
 );
@@ -79,9 +77,7 @@ export const getEstoqueByProdutoId = createAsyncThunk(
     try {
       const url = `/${baseEstoquesURL}/produto/${id}}`;
       const response = await axiosInstance.get(url);
-      return {
-        data: response.data,
-      };
+      return response.data;
     } catch (error) { return error.message; }
   },
 );
@@ -92,9 +88,7 @@ export const searchEstoqueByValidade = createAsyncThunk(
     try {
       const url = `/${baseEstoquesURL}/query?validade=${validade}&operador=${operador}`;
       const response = await axiosInstance.get(url);
-      return {
-        data: response.data,
-      };
+      return response.data;
     } catch (error) { return error.message; }
   },
 );
@@ -105,9 +99,7 @@ export const getEstoqueByValidadeVencidos = createAsyncThunk(
     try {
       const url = `/${baseEstoquesURL}/validade/vencidos`;
       const response = await axiosInstance.get(url);
-      return {
-        data: response.data,
-      };
+      return response.data;
     } catch (error) { return error.message; }
   },
 );
@@ -118,9 +110,7 @@ export const getEstoqueByValidadePeriodo = createAsyncThunk(
     try {
       const url = `/${baseEstoquesURL}/validade/${periodo}`;
       const response = await axiosInstance.get(url);
-      return {
-        data: response.data,
-      };
+      return response.data;
     } catch (error) { return error.message; }
   },
 );
@@ -131,9 +121,7 @@ export const searchEstoqueByLote = createAsyncThunk(
     try {
       const url = `/${baseEstoquesURL}/query?lote=${lote}`;
       const response = await axiosInstance.get(url);
-      return {
-        data: response.data,
-      };
+      return response.data;
     } catch (error) { return error.message; }
   },
 );
@@ -144,9 +132,7 @@ export const searchEstoqueByDescricao = createAsyncThunk(
     try {
       const url = `/${baseEstoquesURL}/query?lote=${descricao}`;
       const response = await axiosInstance.get(url);
-      return {
-        data: response.data,
-      };
+      return response.data;
     } catch (error) { return error.message; }
   },
 );
@@ -157,9 +143,7 @@ export const searchEstoqueByUnidade = createAsyncThunk(
     try {
       const url = `/${baseEstoquesURL}/query?unidade=${unidade}`;
       const response = await axiosInstance.get(url);
-      return {
-        data: response.data,
-      };
+      return response.data;
     } catch (error) { return error.message; }
   },
 );
@@ -170,9 +154,7 @@ export const searchEstoqueByQuantidade = createAsyncThunk(
     try {
       const url = `/${baseEstoquesURL}/query?quantidade=${quantidade}&operador=${operador}`;
       const response = await axiosInstance.get(url);
-      return {
-        data: response.data,
-      };
+      return response.data;
     } catch (error) { return error.message; }
   },
 );
@@ -183,35 +165,29 @@ export const searchEstoqueByQuarentena = createAsyncThunk(
     try {
       const url = `/${baseEstoquesURL}/query?quarentena=${quarentena}&operador=${operador}`;
       const response = await axiosInstance.get(url);
-      return {
-        data: response.data,
-      };
+      return response.data;
     } catch (error) { return error.message; }
   },
 );
 
 export const searchEstoqueBySaldoAtual = createAsyncThunk(
-  'estoques/searchProdutotBySaldoAtual',
+  'estoques/searchEstoquesBySaldoAtual',
   async (saldoAtual, operador) => {
     try {
       const url = `/${baseEstoquesURL}/query?saldoAtual=${saldoAtual}&operador=${operador}`;
       const response = await axiosInstance.get(url);
-      return {
-        data: response.data,
-      };
+      return response.data;
     } catch (error) { return error.message; }
   },
 );
 
 export const searchEstoqueBySaldoOriginal = createAsyncThunk(
-  'estoques/searchProdutotBySaldoAtual',
+  'estoques/searchEstoqueBySaldoOriginal',
   async (saldoOriginal, operador) => {
     try {
       const url = `/${baseEstoquesURL}/query?saldoOriginal=${saldoOriginal}&operador=${operador}`;
       const response = await axiosInstance.get(url);
-      return {
-        data: response.data,
-      };
+      return response.data;
     } catch (error) { return error.message; }
   },
 );
@@ -378,7 +354,7 @@ export const estoquesSlice = createSlice({
         state.error = action.error.message || 'Something went wrong';
       })
 
-    // searchProdutotByQuarentena
+    // searchEstoquesByQuarentena
       .addCase(searchEstoqueByQuarentena.fulfilled, (state, action) => {
         state.estoques = action.payload;
         state.status = fetchStatus.SUCCESS;

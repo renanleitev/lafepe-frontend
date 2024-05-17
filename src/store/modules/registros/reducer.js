@@ -32,9 +32,7 @@ export const getRegistros = createAsyncThunk(
   async () => {
     try {
       const response = await axiosInstance.get(baseRegistrosURL);
-      return {
-        data: response.data,
-      };
+      return response.data;
     } catch (error) { return error.message; }
   },
 );
@@ -79,9 +77,7 @@ export const getRegistroByEstoqueId = createAsyncThunk(
     try {
       const url = `/${baseRegistrosURL}/estoque/${id}}`;
       const response = await axiosInstance.get(url);
-      return {
-        data: response.data,
-      };
+      return response.data;
     } catch (error) { return error.message; }
   },
 );
@@ -92,9 +88,7 @@ export const searchRegistroByData = createAsyncThunk(
     try {
       const url = `/${baseRegistrosURL}/query?validade=${validade}&operador=${operador}`;
       const response = await axiosInstance.get(url);
-      return {
-        data: response.data,
-      };
+      return response.data;
     } catch (error) { return error.message; }
   },
 );

@@ -17,6 +17,7 @@ function Input({
   data,
   setData,
   disabled,
+  inputWidth,
 }) {
   const handleInput = useCallback((e) => {
     setData({
@@ -51,9 +52,9 @@ function Input({
       rows={2}
       // Style
       fullWidth
-      sx={{ width: 400 }}
-      // Avoid negative values (input type number)
-      inputProps={{ min: 0 }}
+      sx={{ width: inputWidth }}
+      // Avoid negative values and Allow float numbers
+      inputProps={{ min: 0, step: 'any' }}
       // Error text
       error={error}
       helperText={error && errorText}
@@ -72,11 +73,13 @@ Input.propTypes = {
   ])).isRequired,
   setData: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
+  inputWidth: PropTypes.number,
 };
 
 Input.defaultProps = {
   disabled: false,
   keyType: InputType.TEXT,
+  inputWidth: 512,
 };
 
 export default Input;

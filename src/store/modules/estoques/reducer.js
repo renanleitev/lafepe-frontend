@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import axiosInstance, { baseEstoquesURL } from '../../../services/axios';
 import fetchStatus from '../../../config/fetchStatus';
 import { initialProduto } from '../produtos/reducer';
+import { getCurrentDateFormatted } from '../../../hooks/convertDate';
 
 export const initialEstoque = {
   id: '',
@@ -14,7 +15,7 @@ export const initialEstoque = {
   saldoAtual: 0,
   saldoOriginal: 0,
   precoUnitario: 0,
-  validade: new Date(),
+  validade: getCurrentDateFormatted(),
   descricao: '',
   produtoId: initialProduto.id,
   produto: initialProduto,
@@ -24,7 +25,11 @@ const initialState = {
   status: fetchStatus.IDLE,
   error: '',
   estoque: initialEstoque,
-  estoques: [initialEstoque],
+  estoques: [],
+  estoquesVencidos: [],
+  estoquesValidade1Mes: [],
+  estoquesValidade6Meses: [],
+  estoquesValidade12Meses: [],
 };
 
 export const getEstoques = createAsyncThunk(
@@ -86,7 +91,7 @@ export const getEstoqueByProdutoId = createAsyncThunk(
   'estoques/getEstoqueByProdutoId',
   async (id) => {
     try {
-      const url = `/${baseEstoquesURL}/produto/${id}}`;
+      const url = `${baseEstoquesURL}/produto/${id}}`;
       const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) { return error.message; }
@@ -95,9 +100,9 @@ export const getEstoqueByProdutoId = createAsyncThunk(
 
 export const searchEstoqueByValidade = createAsyncThunk(
   'produtos/searchEstoqueByValidade',
-  async (validade, operador) => {
+  async ({ validade, operador }) => {
     try {
-      const url = `/${baseEstoquesURL}/query?validade=${validade}&operador=${operador}`;
+      const url = `${baseEstoquesURL}/query?validade=${validade}&operador=${operador}`;
       const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) { return error.message; }
@@ -108,7 +113,7 @@ export const getEstoqueByValidadeVencidos = createAsyncThunk(
   'estoques/getEstoqueByValidadeVencidos',
   async () => {
     try {
-      const url = `/${baseEstoquesURL}/validade/vencidos`;
+      const url = `${baseEstoquesURL}/validade/vencidos`;
       const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) { return error.message; }
@@ -119,7 +124,40 @@ export const getEstoqueByValidadePeriodo = createAsyncThunk(
   'estoques/getEstoqueByValidadePeriodo',
   async (periodo) => {
     try {
-      const url = `/${baseEstoquesURL}/validade/${periodo}`;
+      const url = `${baseEstoquesURL}/validade/${periodo}`;
+      const response = await axiosInstance.get(url);
+      return response.data;
+    } catch (error) { return error.message; }
+  },
+);
+
+export const getEstoqueByValidade1Mes = createAsyncThunk(
+  'estoques/getEstoqueByValidade1Mes',
+  async () => {
+    try {
+      const url = `${baseEstoquesURL}/validade/1`;
+      const response = await axiosInstance.get(url);
+      return response.data;
+    } catch (error) { return error.message; }
+  },
+);
+
+export const getEstoqueByValidade6Meses = createAsyncThunk(
+  'estoques/getEstoqueByValidade6Meses',
+  async () => {
+    try {
+      const url = `${baseEstoquesURL}/validade/6`;
+      const response = await axiosInstance.get(url);
+      return response.data;
+    } catch (error) { return error.message; }
+  },
+);
+
+export const getEstoqueByValidade12Meses = createAsyncThunk(
+  'estoques/getEstoqueByValidade12Meses',
+  async () => {
+    try {
+      const url = `${baseEstoquesURL}/validade/12`;
       const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) { return error.message; }
@@ -130,7 +168,7 @@ export const searchEstoqueByLote = createAsyncThunk(
   'estoques/searchEstoqueByLote',
   async (lote) => {
     try {
-      const url = `/${baseEstoquesURL}/query?lote=${lote}`;
+      const url = `${baseEstoquesURL}/query?lote=${lote}`;
       const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) { return error.message; }
@@ -141,7 +179,7 @@ export const searchEstoqueByDescricao = createAsyncThunk(
   'estoques/searchEstoqueByDescricao',
   async (descricao) => {
     try {
-      const url = `/${baseEstoquesURL}/query?lote=${descricao}`;
+      const url = `/${baseEstoquesURL}/query?descricao=${descricao}`;
       const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) { return error.message; }
@@ -152,7 +190,7 @@ export const searchEstoqueByUnidade = createAsyncThunk(
   'estoques/searchEstoqueByUnidade',
   async (unidade) => {
     try {
-      const url = `/${baseEstoquesURL}/query?unidade=${unidade}`;
+      const url = `${baseEstoquesURL}/query?unidade=${unidade}`;
       const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) { return error.message; }
@@ -161,9 +199,9 @@ export const searchEstoqueByUnidade = createAsyncThunk(
 
 export const searchEstoqueByQuantidade = createAsyncThunk(
   'estoques/searchEstoqueByQuantidade',
-  async (quantidade, operador) => {
+  async ({ quantidade, operador }) => {
     try {
-      const url = `/${baseEstoquesURL}/query?quantidade=${quantidade}&operador=${operador}`;
+      const url = `${baseEstoquesURL}/query?quantidade=${quantidade}&operador=${operador}`;
       const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) { return error.message; }
@@ -172,9 +210,9 @@ export const searchEstoqueByQuantidade = createAsyncThunk(
 
 export const searchEstoqueByQuarentena = createAsyncThunk(
   'estoques/searchEstoqueByQuarentena',
-  async (quarentena, operador) => {
+  async ({ quarentena, operador }) => {
     try {
-      const url = `/${baseEstoquesURL}/query?quarentena=${quarentena}&operador=${operador}`;
+      const url = `${baseEstoquesURL}/query?quarentena=${quarentena}&operador=${operador}`;
       const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) { return error.message; }
@@ -183,9 +221,9 @@ export const searchEstoqueByQuarentena = createAsyncThunk(
 
 export const searchEstoqueBySaldoAtual = createAsyncThunk(
   'estoques/searchEstoquesBySaldoAtual',
-  async (saldoAtual, operador) => {
+  async ({ saldoAtual, operador }) => {
     try {
-      const url = `/${baseEstoquesURL}/query?saldoAtual=${saldoAtual}&operador=${operador}`;
+      const url = `${baseEstoquesURL}/query?saldoAtual=${saldoAtual}&operador=${operador}`;
       const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) { return error.message; }
@@ -194,9 +232,9 @@ export const searchEstoqueBySaldoAtual = createAsyncThunk(
 
 export const searchEstoqueBySaldoOriginal = createAsyncThunk(
   'estoques/searchEstoqueBySaldoOriginal',
-  async (saldoOriginal, operador) => {
+  async ({ saldoOriginal, operador }) => {
     try {
-      const url = `/${baseEstoquesURL}/query?saldoOriginal=${saldoOriginal}&operador=${operador}`;
+      const url = `${baseEstoquesURL}/query?saldoOriginal=${saldoOriginal}&operador=${operador}`;
       const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) { return error.message; }
@@ -302,7 +340,7 @@ export const estoquesSlice = createSlice({
 
     // getEstoqueByValidadeVencidos
       .addCase(getEstoqueByValidadeVencidos.fulfilled, (state, action) => {
-        state.estoques = action.payload;
+        state.estoquesVencidos = action.payload;
         state.status = fetchStatus.SUCCESS;
       })
       .addCase(getEstoqueByValidadeVencidos.pending, (state) => {
@@ -322,6 +360,45 @@ export const estoquesSlice = createSlice({
         state.status = fetchStatus.PENDING;
       })
       .addCase(getEstoqueByValidadePeriodo.rejected, (state, action) => {
+        state.status = fetchStatus.FAILURE;
+        state.error = action.error.message;
+      })
+
+    // getEstoqueByValidade1Mes
+      .addCase(getEstoqueByValidade1Mes.fulfilled, (state, action) => {
+        state.estoquesValidade1Mes = action.payload;
+        state.status = fetchStatus.SUCCESS;
+      })
+      .addCase(getEstoqueByValidade1Mes.pending, (state) => {
+        state.status = fetchStatus.PENDING;
+      })
+      .addCase(getEstoqueByValidade1Mes.rejected, (state, action) => {
+        state.status = fetchStatus.FAILURE;
+        state.error = action.error.message;
+      })
+
+    // getEstoqueByValidade6Meses
+      .addCase(getEstoqueByValidade6Meses.fulfilled, (state, action) => {
+        state.estoquesValidade6Meses = action.payload;
+        state.status = fetchStatus.SUCCESS;
+      })
+      .addCase(getEstoqueByValidade6Meses.pending, (state) => {
+        state.status = fetchStatus.PENDING;
+      })
+      .addCase(getEstoqueByValidade6Meses.rejected, (state, action) => {
+        state.status = fetchStatus.FAILURE;
+        state.error = action.error.message;
+      })
+
+    // getEstoqueByValidade12Meses
+      .addCase(getEstoqueByValidade12Meses.fulfilled, (state, action) => {
+        state.estoquesValidade12Meses = action.payload;
+        state.status = fetchStatus.SUCCESS;
+      })
+      .addCase(getEstoqueByValidade12Meses.pending, (state) => {
+        state.status = fetchStatus.PENDING;
+      })
+      .addCase(getEstoqueByValidade12Meses.rejected, (state, action) => {
         state.status = fetchStatus.FAILURE;
         state.error = action.error.message;
       })

@@ -2,13 +2,13 @@ import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { StyledContainer, Form } from '../../config/GlobalStyle';
 import Input, { InputType } from '../Input/Input';
-import { createProduto, initialProduto } from '../../store/modules/produtos/reducer';
+import { createProduto, initialProdutoForPostAPI } from '../../store/modules/produtos/reducer';
 import validationObject from '../../hooks/validationObject';
 
 function CreateProduto() {
   const dispatch = useDispatch();
 
-  const [produto, setProduto] = useState(initialProduto);
+  const [produto, setProduto] = useState(initialProdutoForPostAPI);
 
   const handleSubmit = useCallback((event) => {
     event.preventDefault();

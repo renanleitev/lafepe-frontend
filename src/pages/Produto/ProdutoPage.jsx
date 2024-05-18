@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import ProdutosTable from '../../components/Produto/ProdutosTable';
+import SearchProduto from '../../components/Produto/SearchProduto';
 import CreateProduto from '../../components/Produto/CreateProduto';
 import EditProduto from '../../components/Produto/EditProduto';
 import DeleteProduto from '../../components/Produto/DeleteProduto';
@@ -8,7 +8,7 @@ import TabHeader from '../../components/TabHeader/TabHeader';
 function RenderPage(option) {
   switch (option) {
     case 0:
-      return <ProdutosTable />;
+      return <SearchProduto />;
     case 1:
       return <CreateProduto />;
     case 2:
@@ -16,7 +16,7 @@ function RenderPage(option) {
     case 3:
       return <DeleteProduto />;
     default:
-      return <ProdutosTable />;
+      return <SearchProduto />;
   }
 }
 

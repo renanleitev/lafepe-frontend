@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import axiosInstance, { baseRegistrosURL } from '../../../services/axios';
 import fetchStatus from '../../../config/fetchStatus';
 import { initialEstoque } from '../estoques/reducer';
+import { getCurrentDateFormatted } from '../../../hooks/convertDate';
 
 export const initialRegistro = {
   id: '',
@@ -15,7 +16,18 @@ export const initialRegistro = {
   saidaQuantidade: 0,
   saldoQuantidadeInicial: 0,
   saldoQuantidadeFinal: 0,
-  data: new Date(),
+  data: getCurrentDateFormatted(),
+  estoqueId: initialEstoque.id,
+  estoque: initialEstoque,
+};
+
+// Para a requisição POST
+export const initialRegistroForPostAPI = {
+  entradaQuarentena: 0,
+  saidaQuarentena: 0,
+  entradaQuantidade: 0,
+  saidaQuantidade: 0,
+  data: getCurrentDateFormatted(),
   estoqueId: initialEstoque.id,
   estoque: initialEstoque,
 };
@@ -86,7 +98,18 @@ export const getRegistroByEstoqueId = createAsyncThunk(
   'registros/getRegistroByEstoqueId',
   async (id) => {
     try {
-      const url = `/${baseRegistrosURL}/estoque/${id}}`;
+      const url = `${baseRegistrosURL}/estoque/${id}}`;
+      const response = await axiosInstance.get(url);
+      return response.data;
+    } catch (error) { return error.message; }
+  },
+);
+
+export const getRegistroByEstoqueLote = createAsyncThunk(
+  'registros/getRegistroByEstoqueLote',
+  async (lote) => {
+    try {
+      const url = `${baseRegistrosURL}/query?lote=${lote}`;
       const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) { return error.message; }
@@ -94,10 +117,10 @@ export const getRegistroByEstoqueId = createAsyncThunk(
 );
 
 export const searchRegistroByData = createAsyncThunk(
-  'registros/searchRegistroByValidade',
-  async (validade, operador) => {
+  'registros/searchRegistroByData',
+  async ({ data, operador }) => {
     try {
-      const url = `/${baseRegistrosURL}/query?validade=${validade}&operador=${operador}`;
+      const url = `${baseRegistrosURL}/query?data=${data}&operador=${operador}`;
       const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) { return error.message; }
@@ -185,6 +208,19 @@ export const registrosSlice = createSlice({
         state.status = fetchStatus.PENDING;
       })
       .addCase(getRegistroByEstoqueId.rejected, (state, action) => {
+        state.status = fetchStatus.FAILURE;
+        state.error = action.error.message || 'Something went wrong';
+      })
+
+    // getRegistroByEstoqueLote
+      .addCase(getRegistroByEstoqueLote.fulfilled, (state, action) => {
+        state.registros = action.payload;
+        state.status = fetchStatus.SUCCESS;
+      })
+      .addCase(getRegistroByEstoqueLote.pending, (state) => {
+        state.status = fetchStatus.PENDING;
+      })
+      .addCase(getRegistroByEstoqueLote.rejected, (state, action) => {
         state.status = fetchStatus.FAILURE;
         state.error = action.error.message || 'Something went wrong';
       })

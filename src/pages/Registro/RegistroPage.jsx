@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import RegistrosTable from '../../components/Registro/RegistrosTable';
+import SearchRegistro from '../../components/Registro/SearchRegistro';
 import CreateRegistro from '../../components/Registro/CreateRegistro';
 import EditRegistro from '../../components/Registro/EditRegistro';
 import DeleteRegistro from '../../components/Registro/DeleteRegistro';
@@ -8,7 +8,7 @@ import TabHeader from '../../components/TabHeader/TabHeader';
 function RenderPage(option) {
   switch (option) {
     case 0:
-      return <RegistrosTable />;
+      return <SearchRegistro />;
     case 1:
       return <CreateRegistro />;
     case 2:
@@ -16,7 +16,7 @@ function RenderPage(option) {
     case 3:
       return <DeleteRegistro />;
     default:
-      return <RegistrosTable />;
+      return <SearchRegistro />;
   }
 }
 

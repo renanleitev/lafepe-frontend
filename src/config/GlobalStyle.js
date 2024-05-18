@@ -68,6 +68,7 @@ export const StyledContainer = styled.div`
   gap: 2rem;
   justify-content: center;
   align-items: center;
+  padding-bottom: 4rem;
 `;
 
 export const HorizontalContainer = styled.div`
@@ -75,7 +76,7 @@ export const HorizontalContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
 `;
 
 export const VerticalContainer = styled.div`

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import EstoquesTable from '../../components/Estoque/EstoquesTable';
+import SearchEstoque from '../../components/Estoque/SearchEstoque';
 import CreateEstoque from '../../components/Estoque/CreateEstoque';
 import EditEstoque from '../../components/Estoque/EditEstoque';
 import DeleteEstoque from '../../components/Estoque/DeleteEstoque';
@@ -8,7 +8,7 @@ import TabHeader from '../../components/TabHeader/TabHeader';
 function RenderPage(option) {
   switch (option) {
     case 0:
-      return <EstoquesTable />;
+      return <SearchEstoque />;
     case 1:
       return <CreateEstoque />;
     case 2:
@@ -16,7 +16,7 @@ function RenderPage(option) {
     case 3:
       return <DeleteEstoque />;
     default:
-      return <EstoquesTable />;
+      return <SearchEstoque />;
   }
 }
 

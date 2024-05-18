@@ -12,7 +12,7 @@ export default function TabHeader({ page, option, setOption }) {
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={option} onChange={handleChange} centered aria-label="basic tabs example">
-          <Tab label={`Visualizar ${page}s`} />
+          <Tab label={`Ver ${page}s`} />
           <Tab label={`Criar ${page}`} />
           <Tab label={`Editar ${page}`} />
           <Tab label={`Apagar ${page}`} />

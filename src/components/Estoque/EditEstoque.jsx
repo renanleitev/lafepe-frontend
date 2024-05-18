@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-import { StyledContainer, Form } from '../../config/GlobalStyle';
+import { StyledContainer, Form, HorizontalContainer } from '../../config/GlobalStyle';
 import Input, { InputType } from '../Input/Input';
 import { editEstoque } from '../../store/modules/estoques/reducer';
 import convertObjectToArray from '../../hooks/convertObjectToArray';
@@ -23,16 +23,19 @@ function EditEstoque() {
   return (
     <StyledContainer>
       <h1>Editar Estoque</h1>
-      <Autocomplete
-        freeSolo
-        disablePortal
-        id="search-estoque"
-        onChange={(event, value) => setEstoque(value?.item)}
-        options={convertOptions(estoques, 'lote')}
-        sx={{ width: 400 }}
+      <HorizontalContainer>
+        <Autocomplete
+          freeSolo
+          disablePortal
+          id="search-estoque"
+          onChange={(event, value) => setEstoque(value?.item)}
+          options={convertOptions(estoques, 'lote')}
+          sx={{ width: 400 }}
       // eslint-disable-next-line react/jsx-props-no-spreading
-        renderInput={(params) => <TextField {...params} label="Estoques" />}
-      />
+          renderInput={(params) => <TextField {...params} label="Estoques" />}
+        />
+        <button type="submit">EDITAR</button>
+      </HorizontalContainer>
       {estoque
       && (
       <Form onSubmit={handleSubmit}>
@@ -69,7 +72,6 @@ function EditEstoque() {
           keyName="descricao"
           keyType={InputType.TEXTAREA}
         />
-        <button type="submit">EDITAR</button>
       </Form>
       )}
     </StyledContainer>

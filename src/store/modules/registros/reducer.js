@@ -5,7 +5,7 @@ import axiosInstance, { baseRegistrosURL } from '../../../services/axios';
 import fetchStatus from '../../../config/fetchStatus';
 import { initialEstoque } from '../estoques/reducer';
 
-const initialRegistro = {
+export const initialRegistro = {
   id: '',
   entradaQuarentena: 0,
   saidaQuarentena: 0,
@@ -66,6 +66,17 @@ export const createRegistro = createAsyncThunk(
     try {
       const produtoCreated = await axiosInstance.post(baseRegistrosURL, registro);
       toast.success('Registro criado com sucesso.');
+      return produtoCreated;
+    } catch (error) { return error.message; }
+  },
+);
+
+export const deleteRegistro = createAsyncThunk(
+  'registros/deleteRegistro',
+  async (registro) => {
+    try {
+      const produtoCreated = await axiosInstance.delete(baseRegistrosURL, registro);
+      toast.success('Registro apagado com sucesso.');
       return produtoCreated;
     } catch (error) { return error.message; }
   },
@@ -148,6 +159,19 @@ export const registrosSlice = createSlice({
         state.status = fetchStatus.PENDING;
       })
       .addCase(createRegistro.rejected, (state, action) => {
+        state.status = fetchStatus.FAILURE;
+        state.error = action.error.message || 'Something went wrong';
+      })
+
+    // deleteRegistro
+      .addCase(deleteRegistro.fulfilled, (state) => {
+        state.registro = initialRegistro;
+        state.status = fetchStatus.SUCCESS;
+      })
+      .addCase(deleteRegistro.pending, (state) => {
+        state.status = fetchStatus.PENDING;
+      })
+      .addCase(deleteRegistro.rejected, (state, action) => {
         state.status = fetchStatus.FAILURE;
         state.error = action.error.message || 'Something went wrong';
       })

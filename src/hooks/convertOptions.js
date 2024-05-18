@@ -1,7 +1,7 @@
-const convertOptions = (array) => {
+const convertOptions = (array, key) => {
   const options = [];
   array.forEach((item) => {
-    options.push({ label: item.nome, item });
+    options.push({ label: item[key].toString(), item });
   });
   return options;
 };

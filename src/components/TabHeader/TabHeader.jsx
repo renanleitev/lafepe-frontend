@@ -15,7 +15,7 @@ export default function TabHeader({ page, option, setOption }) {
           <Tab label={`Visualizar ${page}s`} />
           <Tab label={`Criar ${page}`} />
           <Tab label={`Editar ${page}`} />
-          <Tab label={`Deletar ${page}`} />
+          <Tab label={`Apagar ${page}`} />
         </Tabs>
       </Box>
     </Box>

@@ -71,6 +71,17 @@ export const createEstoque = createAsyncThunk(
   },
 );
 
+export const deleteEstoque = createAsyncThunk(
+  'estoques/deleteEstoque',
+  async (id) => {
+    try {
+      const produtoCreated = await axiosInstance.delete(`${baseEstoquesURL}/${id}`, id);
+      toast.success('Estoque apagado com sucesso.');
+      return produtoCreated;
+    } catch (error) { return error.message; }
+  },
+);
+
 export const getEstoqueByProdutoId = createAsyncThunk(
   'estoques/getEstoqueByProdutoId',
   async (id) => {
@@ -246,6 +257,19 @@ export const estoquesSlice = createSlice({
         state.status = fetchStatus.PENDING;
       })
       .addCase(createEstoque.rejected, (state, action) => {
+        state.status = fetchStatus.FAILURE;
+        state.error = action.error.message || 'Something went wrong';
+      })
+
+    // deleteEstoque
+      .addCase(deleteEstoque.fulfilled, (state) => {
+        state.estoque = initialEstoque;
+        state.status = fetchStatus.SUCCESS;
+      })
+      .addCase(deleteEstoque.pending, (state) => {
+        state.status = fetchStatus.PENDING;
+      })
+      .addCase(deleteEstoque.rejected, (state, action) => {
         state.status = fetchStatus.FAILURE;
         state.error = action.error.message || 'Something went wrong';
       })

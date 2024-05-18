@@ -29,6 +29,7 @@ export default createGlobalStyle`
     }
     a {
         text-decoration: none;
+        color: ${colors.primaryWhiteColor};
     }
     a:hover{
         color: ${colors.infoColor};
@@ -58,34 +59,29 @@ export const Form = styled.form`
     h1, h2{
         text-align: center;
     }
-    .link{
-        margin-top: 10px;
-        font-size: 12px;
-    }
-    .link:hover{
-        color: ${colors.infoColor};
-    }
-    label {
-        font-size: larger;
-        font-weight: bolder;
-        text-align: center;
-        margin-right: 10px;
-        margin-top: 15px;
-        width: 250px;
-    }
-    input {
-        border: none;
-        outline: none;
-        width: 250px;
-        padding-top: 5px;
-        border-bottom: 1px solid ${colors.primaryDarkColor};
-        border-radius: 0;
-    }
-    button {
-        border-radius: 20px;
-        margin: 20px auto;
-    }
-    button:hover{
-        background-color: ${colors.infoColor};
-    }
+`;
+
+export const StyledContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const HorizontalContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+`;
+
+export const VerticalContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
 `;

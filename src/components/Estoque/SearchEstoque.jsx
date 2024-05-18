@@ -13,12 +13,21 @@ import {
   searchEstoqueBySaldoOriginal,
   searchEstoqueByUnidade,
   searchEstoqueByValidade,
+  getEstoqueByValidadePeriodo,
+  getEstoqueByValidadeVencidosQuery,
+  getEstoqueBySaldoNegativo,
+  getEstoqueBySaldoPositivo,
 } from '../../store/modules/estoques/reducer';
 import { VerticalContainer, HorizontalContainer } from '../../config/GlobalStyle';
 import convertDate from '../../hooks/convertDate';
+import useQuery from '../../hooks/useQuery';
 
 function SearchEstoque() {
   const dispatch = useDispatch();
+  const query = useQuery();
+  const validade = query.get('validade');
+  const vencidos = query.get('vencidos');
+  const saldo = query.get('saldo');
   const isLoading = useSelector((state) => state.estoques.status);
   const estoques = convertObjectToArray(useSelector((state) => state.estoques.estoques)) || [];
   const [value, setValue] = useState('');
@@ -80,8 +89,18 @@ function SearchEstoque() {
   ];
 
   useEffect(() => {
-    dispatch(getEstoques());
-  }, [dispatch]);
+    if (validade) {
+      dispatch(getEstoqueByValidadePeriodo(validade));
+    } else if (vencidos) {
+      dispatch(getEstoqueByValidadeVencidosQuery());
+    } else if (saldo === 'POSITIVO') {
+      dispatch(getEstoqueBySaldoPositivo());
+    } else if (saldo === 'NEGATIVO') {
+      dispatch(getEstoqueBySaldoNegativo());
+    } else {
+      dispatch(getEstoques());
+    }
+  }, [dispatch, saldo, validade, vencidos]);
 
   const handleSearch = useCallback(() => {
     switch (option) {

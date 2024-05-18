@@ -100,6 +100,26 @@ export const getEstoqueByProdutoId = createAsyncThunk(
   },
 );
 
+export const getEstoqueBySaldoPositivo = createAsyncThunk(
+  'estoques/getEstoqueBySaldoPositivo',
+  async () => {
+    try {
+      const response = await axiosInstance.get(baseEstoquesURL);
+      return response.data;
+    } catch (error) { return error.message; }
+  },
+);
+
+export const getEstoqueBySaldoNegativo = createAsyncThunk(
+  'estoques/getEstoqueBySaldoNegativo',
+  async () => {
+    try {
+      const response = await axiosInstance.get(baseEstoquesURL);
+      return response.data;
+    } catch (error) { return error.message; }
+  },
+);
+
 export const searchEstoqueByValidade = createAsyncThunk(
   'produtos/searchEstoqueByValidade',
   async ({ validade, operador }) => {
@@ -113,6 +133,17 @@ export const searchEstoqueByValidade = createAsyncThunk(
 
 export const getEstoqueByValidadeVencidos = createAsyncThunk(
   'estoques/getEstoqueByValidadeVencidos',
+  async () => {
+    try {
+      const url = `${baseEstoquesURL}/validade/vencidos`;
+      const response = await axiosInstance.get(url);
+      return response.data;
+    } catch (error) { return error.message; }
+  },
+);
+
+export const getEstoqueByValidadeVencidosQuery = createAsyncThunk(
+  'estoques/getEstoqueByValidadeVencidosQuery',
   async () => {
     try {
       const url = `${baseEstoquesURL}/validade/vencidos`;
@@ -264,6 +295,36 @@ export const estoquesSlice = createSlice({
         state.error = action.error.message || 'Something went wrong';
       })
 
+    // getEstoqueBySaldoPositivo
+      .addCase(getEstoqueBySaldoPositivo.fulfilled, (state, action) => {
+        state.status = fetchStatus.SUCCESS;
+        const estoques = action.payload;
+        const estoquesPositivos = estoques.filter((estoque) => estoque.saldoAtual > 0);
+        state.estoques = estoquesPositivos;
+      })
+      .addCase(getEstoqueBySaldoPositivo.pending, (state) => {
+        state.status = fetchStatus.PENDING;
+      })
+      .addCase(getEstoqueBySaldoPositivo.rejected, (state, action) => {
+        state.status = fetchStatus.FAILURE;
+        state.error = action.error.message || 'Something went wrong';
+      })
+
+    // getEstoqueBySaldoNegativo
+      .addCase(getEstoqueBySaldoNegativo.fulfilled, (state, action) => {
+        state.status = fetchStatus.SUCCESS;
+        const estoques = action.payload;
+        const estoquesNegativos = estoques.filter((estoque) => estoque.saldoAtual < 0);
+        state.estoques = estoquesNegativos;
+      })
+      .addCase(getEstoqueBySaldoNegativo.pending, (state) => {
+        state.status = fetchStatus.PENDING;
+      })
+      .addCase(getEstoqueBySaldoNegativo.rejected, (state, action) => {
+        state.status = fetchStatus.FAILURE;
+        state.error = action.error.message || 'Something went wrong';
+      })
+
     // getEstoque
       .addCase(getEstoque.fulfilled, (state, action) => {
         state.status = fetchStatus.SUCCESS;
@@ -351,6 +412,19 @@ export const estoquesSlice = createSlice({
         state.status = fetchStatus.PENDING;
       })
       .addCase(getEstoqueByValidadeVencidos.rejected, (state, action) => {
+        state.status = fetchStatus.FAILURE;
+        state.error = action.error.message || 'Something went wrong';
+      })
+
+    // getEstoqueByValidadeVencidosQuery
+      .addCase(getEstoqueByValidadeVencidosQuery.fulfilled, (state, action) => {
+        state.estoques = action.payload;
+        state.status = fetchStatus.SUCCESS;
+      })
+      .addCase(getEstoqueByValidadeVencidosQuery.pending, (state) => {
+        state.status = fetchStatus.PENDING;
+      })
+      .addCase(getEstoqueByValidadeVencidosQuery.rejected, (state, action) => {
         state.status = fetchStatus.FAILURE;
         state.error = action.error.message || 'Something went wrong';
       })

@@ -46,21 +46,57 @@ function HomePage() {
       <VerticalContainer style={{ alignItems: 'flex-start' }}>
         <h2>Visão Geral</h2>
         <HorizontalContainer>
-          <DashboardWindow title="Produtos" quantity={produtos?.length} />
-          <DashboardWindow title="Estoques" quantity={estoques?.length} />
-          <DashboardWindow title="Registros" quantity={registros?.length} />
+          <DashboardWindow
+            title="Produtos"
+            quantity={produtos?.length}
+            link="/produtos"
+          />
+          <DashboardWindow
+            title="Estoques"
+            quantity={estoques?.length}
+            link="/estoques"
+          />
+          <DashboardWindow
+            title="Registros"
+            quantity={registros?.length}
+            link="/registros"
+          />
         </HorizontalContainer>
         <h2>Validade dos Estoques</h2>
         <HorizontalContainer>
-          <DashboardWindow title="Produtos Vencidos" quantity={estoquesVencidos?.length} />
-          <DashboardWindow title="Produtos Validade 1 Mês" quantity={estoquesValidade1Mes?.length} />
-          <DashboardWindow title="Produtos Validade 6 Meses" quantity={estoquesValidade6Meses?.length} />
-          <DashboardWindow title="Produtos Validade 12 Meses" quantity={estoquesValidade12Meses?.length} />
+          <DashboardWindow
+            title="Produtos Vencidos"
+            quantity={estoquesVencidos?.length}
+            link="/estoques?vencidos=TRUE"
+          />
+          <DashboardWindow
+            title="Validade 1 Mês"
+            quantity={estoquesValidade1Mes?.length}
+            link="/estoques?validade=1"
+          />
+          <DashboardWindow
+            title="Validade 6 Meses"
+            quantity={estoquesValidade6Meses?.length}
+            link="/estoques?validade=6"
+          />
+          <DashboardWindow
+            title="Validade 12 Meses"
+            quantity={estoquesValidade12Meses?.length}
+            link="/estoques?validade=12"
+          />
         </HorizontalContainer>
         <h2>Quantidade dos Estoques</h2>
         <HorizontalContainer>
-          <DashboardWindow title="Estoque Sobrando" quantity={estoquesPositivos?.length} />
-          <DashboardWindow title="Estoque Faltando" quantity={estoquesNegativos?.length} />
+          <DashboardWindow
+            title="Estoque Sobrando"
+            quantity={estoquesPositivos?.length}
+            link="/estoques?saldo=POSITIVO"
+          />
+          <DashboardWindow
+            title="Estoque Faltando"
+            quantity={estoquesNegativos?.length}
+            link="/estoques?saldo=NEGATIVO"
+          />
         </HorizontalContainer>
       </VerticalContainer>
     </VerticalContainer>

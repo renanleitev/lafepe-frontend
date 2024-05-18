@@ -17,6 +17,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { TablePagination } from '@mui/material';
 import Loading from '../Loading/LoadingContainer';
 import fetchStatus from '../../config/fetchStatus';
+import convertDate from '../../hooks/convertDate';
 
 function Row(props) {
   const { row } = props;
@@ -60,7 +61,7 @@ function Row(props) {
           {row.saldoQuarentenaFinal}
         </TableCell>
         <TableCell component="th" scope="row" width={columnWidth}>
-          {row.data}
+          {convertDate(row.data)}
         </TableCell>
       </TableRow>
       <TableRow>

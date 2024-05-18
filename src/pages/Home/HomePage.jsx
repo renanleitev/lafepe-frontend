@@ -59,8 +59,8 @@ function HomePage() {
         </HorizontalContainer>
         <h2>Quantidade dos Estoques</h2>
         <HorizontalContainer>
-          <DashboardWindow title="Produtos Sobrando" quantity={estoquesPositivos?.length} />
-          <DashboardWindow title="Produtos Faltando" quantity={estoquesNegativos?.length} />
+          <DashboardWindow title="Estoque Sobrando" quantity={estoquesPositivos?.length} />
+          <DashboardWindow title="Estoque Faltando" quantity={estoquesNegativos?.length} />
         </HorizontalContainer>
       </VerticalContainer>
     </VerticalContainer>

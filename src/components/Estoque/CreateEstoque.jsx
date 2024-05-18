@@ -36,45 +36,51 @@ function CreateEstoque() {
             onChange={(event, value) => setProduto(value?.item)}
             options={convertOptions(produtos, 'nome')}
             sx={{ width: 400 }}
-          // eslint-disable-next-line react/jsx-props-no-spreading
+            // eslint-disable-next-line react/jsx-props-no-spreading
             renderInput={(params) => <TextField {...params} label="Produtos" />}
+            disabled={produtos.length === 0}
           />
           <button type="submit">CRIAR</button>
         </HorizontalContainer>
-        <Input
-          data={estoque}
-          setData={setEstoque}
-          label="Lote"
-          keyName="lote"
-        />
-        <Input
-          data={estoque}
-          setData={setEstoque}
-          label="Quantidade"
-          keyName="quantidade"
-          keyType={InputType.NUMBER}
-        />
-        <Input
-          data={estoque}
-          setData={setEstoque}
-          label="Quarentena"
-          keyName="quarentena"
-          keyType={InputType.NUMBER}
-        />
-        <Input
-          data={estoque}
-          setData={setEstoque}
-          label="Validade"
-          keyName="validade"
-          keyType={InputType.DATE}
-        />
-        <Input
-          data={estoque}
-          setData={setEstoque}
-          label="Descrição"
-          keyName="descricao"
-          keyType={InputType.TEXTAREA}
-        />
+        {produto
+        && (
+        <>
+          <Input
+            data={estoque}
+            setData={setEstoque}
+            label="Lote"
+            keyName="lote"
+          />
+          <Input
+            data={estoque}
+            setData={setEstoque}
+            label="Quantidade"
+            keyName="quantidade"
+            keyType={InputType.NUMBER}
+          />
+          <Input
+            data={estoque}
+            setData={setEstoque}
+            label="Quarentena"
+            keyName="quarentena"
+            keyType={InputType.NUMBER}
+          />
+          <Input
+            data={estoque}
+            setData={setEstoque}
+            label="Validade"
+            keyName="validade"
+            keyType={InputType.DATE}
+          />
+          <Input
+            data={estoque}
+            setData={setEstoque}
+            label="Descrição"
+            keyName="descricao"
+            keyType={InputType.TEXTAREA}
+          />
+        </>
+        )}
       </Form>
     </StyledContainer>
   );

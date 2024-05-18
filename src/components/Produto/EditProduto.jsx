@@ -40,7 +40,8 @@ function EditProduto() {
             onChange={(event, value) => setProduto(value?.item)}
             options={convertOptions(produtos, 'nome')}
             sx={{ width: 400 }}
-          // eslint-disable-next-line react/jsx-props-no-spreading
+            disabled={produtos.length === 0}
+            // eslint-disable-next-line react/jsx-props-no-spreading
             renderInput={(params) => <TextField {...params} label="Produtos" />}
           />
           <button type="submit">EDITAR</button>

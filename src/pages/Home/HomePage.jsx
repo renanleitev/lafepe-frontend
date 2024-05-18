@@ -17,6 +17,8 @@ function HomePage() {
   const produtos = useSelector((state) => state.produtos.produtos) || [];
   const estoques = useSelector((state) => state.estoques.estoques) || [];
   const estoquesVencidos = useSelector((state) => state.estoques.estoquesVencidos) || [];
+  const estoquesPositivos = useSelector((state) => state.estoques.estoquesPositivos) || [];
+  const estoquesNegativos = useSelector((state) => state.estoques.estoquesNegativos) || [];
   const estoquesValidade1Mes = useSelector(
     (state) => state.estoques.estoquesValidade1Mes,
   ) || [];
@@ -27,9 +29,6 @@ function HomePage() {
     (state) => state.estoques.estoquesValidade12Meses,
   ) || [];
   const registros = useSelector((state) => state.registros.registros) || [];
-
-  const estoquesNegativos = estoques.filter((estoque) => estoque.saldoAtual < 0);
-  const estoquesPositivos = estoques.filter((estoque) => estoque.saldoAtual > 0);
 
   useEffect(() => {
     dispatch(getProdutos());

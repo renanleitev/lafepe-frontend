@@ -57,6 +57,7 @@ function Editregistro() {
         sx={{ width: 400 }}
         // eslint-disable-next-line react/jsx-props-no-spreading
         renderInput={(params) => <TextField {...params} label="Estoque" />}
+        disabled={estoques.length === 0}
       />
       {estoque
       && (

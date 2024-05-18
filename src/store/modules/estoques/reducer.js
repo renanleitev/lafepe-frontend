@@ -30,6 +30,8 @@ const initialState = {
   estoquesValidade1Mes: [],
   estoquesValidade6Meses: [],
   estoquesValidade12Meses: [],
+  estoquesNegativos: [],
+  estoquesPositivos: [],
 };
 
 export const getEstoques = createAsyncThunk(
@@ -251,6 +253,8 @@ export const estoquesSlice = createSlice({
       .addCase(getEstoques.fulfilled, (state, action) => {
         state.status = fetchStatus.SUCCESS;
         state.estoques = action.payload;
+        state.estoquesPositivos = action.payload.filter((estoque) => estoque.saldoAtual > 0);
+        state.estoquesNegativos = action.payload.filter((estoque) => estoque.saldoAtual < 0);
       })
       .addCase(getEstoques.pending, (state) => {
         state.status = fetchStatus.PENDING;

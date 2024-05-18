@@ -42,8 +42,9 @@ function Createregistro() {
             onChange={(event, value) => setEstoque(value?.item)}
             options={convertOptions(estoques, 'lote')}
             sx={{ width: 400 }}
-          // eslint-disable-next-line react/jsx-props-no-spreading
+            // eslint-disable-next-line react/jsx-props-no-spreading
             renderInput={(params) => <TextField {...params} label="Estoques" />}
+            disabled={estoques.length === 0}
           />
           <button type="submit">CRIAR</button>
         </HorizontalContainer>

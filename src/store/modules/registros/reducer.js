@@ -65,9 +65,9 @@ export const editRegistro = createAsyncThunk(
   async (registro) => {
     try {
       const url = `${baseRegistrosURL}/${registro.id}`;
-      const produtoEdited = await axiosInstance.put(url, registro);
+      await axiosInstance.put(url, registro);
       toast.success('Registro editado com sucesso.');
-      return produtoEdited;
+      return registro;
     } catch (error) { return error.message; }
   },
 );

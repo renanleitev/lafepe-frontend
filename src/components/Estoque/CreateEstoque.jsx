@@ -37,7 +37,7 @@ function CreateEstoque() {
             options={convertOptions(produtos, 'nome')}
             sx={{ width: 400 }}
             // eslint-disable-next-line react/jsx-props-no-spreading
-            renderInput={(params) => <TextField {...params} label="Produtos" />}
+            renderInput={(params) => <TextField {...params} label="Produto" />}
             disabled={produtos.length === 0}
           />
           <button type="submit">CRIAR</button>

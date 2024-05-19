@@ -12,7 +12,7 @@ import { editRegistro, getRegistroByEstoqueLote } from '../../store/modules/regi
 import convertObjectToArray from '../../hooks/convertObjectToArray';
 import convertOptions from '../../hooks/convertOptions';
 import validationObject from '../../hooks/validationObject';
-import convertDate from '../../hooks/convertDate';
+import convertDate, { convertDateReverse } from '../../hooks/convertDate';
 import { getEstoques } from '../../store/modules/estoques/reducer';
 
 function Editregistro() {
@@ -39,7 +39,7 @@ function Editregistro() {
     event.preventDefault();
     const error = validationObject(registro);
     if (!error) {
-      dispatch(editRegistro({ ...registro }));
+      dispatch(editRegistro({ ...registro, data: convertDateReverse(registro.data) }));
     }
   }, [dispatch, registro]);
 
@@ -56,7 +56,7 @@ function Editregistro() {
         options={convertOptions(estoques, 'lote')}
         sx={{ width: 400 }}
         // eslint-disable-next-line react/jsx-props-no-spreading
-        renderInput={(params) => <TextField {...params} label="Estoque" />}
+        renderInput={(params) => <TextField {...params} label="Lote" />}
         disabled={estoques.length === 0}
       />
       {estoque
@@ -69,46 +69,12 @@ function Editregistro() {
         options={convertOptions(registrosConverted, 'data')}
         sx={{ width: 400 }}
         // eslint-disable-next-line react/jsx-props-no-spreading
-        renderInput={(params) => <TextField {...params} label="Registro" />}
+        renderInput={(params) => <TextField {...params} label="Data" />}
       />
       )}
       {registro
       && (
       <Form onSubmit={handleSubmit}>
-        <HorizontalContainer>
-          <Input
-            data={registro}
-            setData={setRegistro}
-            label="Entrada Quarentena"
-            keyName="entradaQuarentena"
-            keyType={InputType.NUMBER}
-            inputWidth={inputWidth}
-          />
-          <Input
-            data={registro}
-            setData={setRegistro}
-            label="Saida Quarentena"
-            keyName="saidaQuarentena"
-            keyType={InputType.NUMBER}
-            inputWidth={inputWidth}
-          />
-          <Input
-            data={registro}
-            setData={setRegistro}
-            label="Saldo Quarentena Inicial"
-            keyName="saldoQuarentenaInicial"
-            keyType={InputType.NUMBER}
-            inputWidth={inputWidth}
-          />
-          <Input
-            data={registro}
-            setData={setRegistro}
-            label="Saida Quarentena Final"
-            keyName="saldoQuarentenaFinal"
-            keyType={InputType.NUMBER}
-            inputWidth={inputWidth}
-          />
-        </HorizontalContainer>
         <HorizontalContainer>
           <Input
             data={registro}
@@ -126,25 +92,27 @@ function Editregistro() {
             keyType={InputType.NUMBER}
             inputWidth={inputWidth}
           />
+        </HorizontalContainer>
+        <HorizontalContainer>
           <Input
             data={registro}
             setData={setRegistro}
-            label="Saldo Quantidade Inicial"
-            keyName="saldoQuantidadeInicial"
+            label="Entrada Quarentena"
+            keyName="entradaQuarentena"
             keyType={InputType.NUMBER}
             inputWidth={inputWidth}
           />
           <Input
             data={registro}
             setData={setRegistro}
-            label="Saida Quantidade Final"
-            keyName="saldoQuantidadeFinal"
+            label="Saida Quarentena"
+            keyName="saidaQuarentena"
             keyType={InputType.NUMBER}
             inputWidth={inputWidth}
           />
         </HorizontalContainer>
         <Input
-          data={registro}
+          data={{ ...registro, data: convertDateReverse(registro.data) }}
           setData={setRegistro}
           label="Data"
           keyName="data"

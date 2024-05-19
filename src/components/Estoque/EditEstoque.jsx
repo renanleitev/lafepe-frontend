@@ -32,7 +32,7 @@ function EditEstoque() {
           options={convertOptions(estoques, 'lote')}
           sx={{ width: 400 }}
           // eslint-disable-next-line react/jsx-props-no-spreading
-          renderInput={(params) => <TextField {...params} label="Estoques" />}
+          renderInput={(params) => <TextField {...params} label="Lote" />}
           disabled={estoques.length === 0}
         />
         <button type="submit">EDITAR</button>
@@ -64,6 +64,7 @@ function EditEstoque() {
           data={estoque}
           setData={setEstoque}
           label="Validade"
+          keyName="validade"
           keyType={InputType.DATE}
         />
         <Input

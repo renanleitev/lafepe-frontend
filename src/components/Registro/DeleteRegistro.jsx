@@ -44,7 +44,7 @@ function DeleteRegistro() {
         options={convertOptions(estoques, 'lote')}
         sx={{ width: 400 }}
         // eslint-disable-next-line react/jsx-props-no-spreading
-        renderInput={(params) => <TextField {...params} label="Estoque" />}
+        renderInput={(params) => <TextField {...params} label="Lote" />}
         disabled={estoques.length === 0}
       />
       {estoque
@@ -57,7 +57,7 @@ function DeleteRegistro() {
         options={convertOptions(registrosConverted, 'data')}
         sx={{ width: 400 }}
         // eslint-disable-next-line react/jsx-props-no-spreading
-        renderInput={(params) => <TextField {...params} label="Registros" />}
+        renderInput={(params) => <TextField {...params} label="Data" />}
       />
       )}
       {registro

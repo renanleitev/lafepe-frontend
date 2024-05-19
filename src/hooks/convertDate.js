@@ -1,5 +1,7 @@
 const convertDate = (date) => date.split('-').reverse().join('/');
 
+export const convertDateReverse = (date) => date.split('/').reverse().join('-');
+
 export function getCurrentDateFormatted() {
   const today = new Date();
 

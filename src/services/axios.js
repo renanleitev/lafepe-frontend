@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-export const baseURL = 'http://localhost:8080/api';
+const backendAPI = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
+
+export const baseURL = `${backendAPI}/api`;
 
 export const baseProdutosURL = `${baseURL}/produtos`;
 export const baseEstoquesURL = `${baseURL}/estoques`;

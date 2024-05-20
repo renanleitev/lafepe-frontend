@@ -18,6 +18,7 @@ import { TablePagination } from '@mui/material';
 import Loading from '../Loading/LoadingContainer';
 import fetchStatus from '../../config/fetchStatus';
 import convertDate from '../../hooks/convertDate';
+import getColorByExpirationDate from '../../hooks/getColorByExpirationDate';
 
 function Row(props) {
   const { row } = props;
@@ -112,7 +113,9 @@ function Row(props) {
                       {row.estoque.descricao}
                     </TableCell>
                     <TableCell component="th" scope="row">
-                      {row.estoque.validade}
+                      <Box sx={{ color: getColorByExpirationDate(row.estoque.validade) }}>
+                        {convertDate(row.estoque.validade)}
+                      </Box>
                     </TableCell>
                     <TableCell component="th" scope="row">
                       {row.estoque.produto.codigo}

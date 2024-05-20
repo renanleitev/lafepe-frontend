@@ -25,7 +25,7 @@ Acesse ```localhost:9090``` no seu navegador para acessar o site.
 Para rodar o container docker, faça a build da imagem:
 
 ```
-docker build -t lafepe-frontend
+docker build . -t lafepe-frontend
 ```
 
 Para executar o container docker:

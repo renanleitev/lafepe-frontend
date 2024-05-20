@@ -1,4 +1,7 @@
 /* eslint-disable no-console */
+/**
+ * Hook para validar cada propriedade (input) de um objeto
+ */
 export default function validationObject(obj) {
   // Obtenha as chaves do objeto
   const keys = Object.keys(obj);

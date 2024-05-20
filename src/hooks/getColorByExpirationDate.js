@@ -1,3 +1,6 @@
+/**
+ * Hook para obter a cor de acordo com a data de validade
+ */
 export default function getColorByExpirationDate(expirationDate) {
   const currentDate = new Date();
   const date = new Date(expirationDate);

@@ -1,10 +1,14 @@
-FROM node:18.16-alpine AS build
+FROM node:20-alpine AS build
+
 # Set the working directory to /app inside the container
 WORKDIR /app
+
 # Copy app files
 COPY . .
+
 # Install dependencies
 RUN npm install
+
 # Build the app
 RUN npm run build
 
@@ -17,8 +21,7 @@ COPY --from=build /app/dist /var/www
 # Copy our custom nginx config
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# Expose port 80 to the Docker host, so we can access it 
-# from the outside.
+# Expose port 80 to the Docker host, so we can access it from the outside.
 EXPOSE 80
 
 ENTRYPOINT ["nginx","-g","daemon off;"]

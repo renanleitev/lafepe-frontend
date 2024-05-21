@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const backendAPI = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
+const backendAPI = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8080';
 
 export const baseURL = `${backendAPI}/api`;
 

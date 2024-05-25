@@ -8,7 +8,7 @@ import {
 import getLastAndNextYears from '../../hooks/getLastAndNextYears';
 import { HorizontalContainer } from '../../config/GlobalStyle';
 
-export default function ChartsPage() {
+export default function ChartsEstoquesPage() {
   const dispatch = useDispatch();
 
   const estoquesPeriodo = useSelector(
@@ -40,7 +40,7 @@ export default function ChartsPage() {
     },
     {
       value: 'quantidade',
-      label: 'Saldo Atual',
+      label: 'Total',
     },
   ];
 

@@ -1,7 +1,8 @@
 import { Pagination, Box } from '@mui/material';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import ChartsPage from './ChartsPage';
+import ChartsEstoquesPage from './ChartsEstoquesPage';
+import ChartsRegistrosPage from './ChartsRegistrosPage';
 import CardsPage from './CardsPage';
 import { VerticalContainer } from '../../config/GlobalStyle';
 
@@ -10,7 +11,9 @@ function RenderPage({ page }) {
     case 1:
       return <CardsPage />;
     case 2:
-      return <ChartsPage />;
+      return <ChartsEstoquesPage />;
+    case 3:
+      return <ChartsRegistrosPage />;
     default:
       return null;
   }
@@ -28,7 +31,7 @@ export default function HomePage() {
       <Box sx={{ height: '70vh' }}>
         <RenderPage page={page} />
       </Box>
-      <Pagination count={2} page={page} onChange={(e, value) => setPage(value)} />
+      <Pagination count={3} page={page} onChange={(e, value) => setPage(value)} />
     </VerticalContainer>
   );
 }

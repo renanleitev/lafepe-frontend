@@ -7,6 +7,7 @@ import {
   getEstoqueByValidade1Mes,
   getEstoqueByValidade6Meses,
   getEstoqueByValidade12Meses,
+  getEstoqueByPrejuizoSaldoAtual,
 } from '../../store/modules/estoques/reducer';
 import { getRegistros } from '../../store/modules/registros/reducer';
 import { VerticalContainer, HorizontalContainer } from '../../config/GlobalStyle';
@@ -28,6 +29,9 @@ function HomePage() {
   const estoquesValidade12Meses = useSelector(
     (state) => state.estoques.estoquesValidade12Meses,
   ) || [];
+  const estoquesPrejuizoSaldoAtual = useSelector(
+    (state) => Number.parseFloat(state.estoques.estoquesPrejuizoSaldoAtual).toFixed(2).replace('.', ','),
+  ) || 0;
   const registros = useSelector((state) => state.registros.registros) || [];
 
   useEffect(() => {
@@ -38,6 +42,7 @@ function HomePage() {
     dispatch(getEstoqueByValidade1Mes());
     dispatch(getEstoqueByValidade6Meses());
     dispatch(getEstoqueByValidade12Meses());
+    dispatch(getEstoqueByPrejuizoSaldoAtual());
   }, [dispatch]);
 
   return (
@@ -96,6 +101,11 @@ function HomePage() {
             title="Estoque Faltando"
             quantity={estoquesNegativos?.length}
             link="/estoques?saldo=NEGATIVO"
+          />
+          <DashboardWindow
+            title="Prejuízo (R$) - Produtos Vencidos"
+            quantity={estoquesPrejuizoSaldoAtual}
+            link="/estoques?vencidos=TRUE"
           />
         </HorizontalContainer>
       </VerticalContainer>

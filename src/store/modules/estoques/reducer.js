@@ -32,6 +32,7 @@ const initialState = {
   estoquesValidade12Meses: [],
   estoquesNegativos: [],
   estoquesPositivos: [],
+  estoquesPrejuizoSaldoAtual: 0,
 };
 
 export const getEstoques = createAsyncThunk(
@@ -136,6 +137,17 @@ export const getEstoqueByValidadeVencidos = createAsyncThunk(
   async () => {
     try {
       const url = `${baseEstoquesURL}/validade/vencidos`;
+      const response = await axiosInstance.get(url);
+      return response.data;
+    } catch (error) { return error.message; }
+  },
+);
+
+export const getEstoqueByPrejuizoSaldoAtual = createAsyncThunk(
+  'estoques/getEstoqueByPrejuizoSaldoAtual',
+  async () => {
+    try {
+      const url = `${baseEstoquesURL}/validade/prejuizo/saldoAtual`;
       const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) { return error.message; }
@@ -416,6 +428,18 @@ export const estoquesSlice = createSlice({
         state.error = action.error.message || 'Something went wrong';
       })
 
+    // getEstoqueByPrejuizoSaldoAtual
+      .addCase(getEstoqueByPrejuizoSaldoAtual.fulfilled, (state, action) => {
+        state.estoquesPrejuizoSaldoAtual = action.payload;
+        state.status = fetchStatus.SUCCESS;
+      })
+      .addCase(getEstoqueByPrejuizoSaldoAtual.pending, (state) => {
+        state.status = fetchStatus.PENDING;
+      })
+      .addCase(getEstoqueByPrejuizoSaldoAtual.rejected, (state, action) => {
+        state.status = fetchStatus.FAILURE;
+        state.error = action.error.message || 'Something went wrong';
+      })
     // getEstoqueByValidadeVencidosQuery
       .addCase(getEstoqueByValidadeVencidosQuery.fulfilled, (state, action) => {
         state.estoques = action.payload;

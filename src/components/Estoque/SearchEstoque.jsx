@@ -152,6 +152,11 @@ function SearchEstoque() {
     }
   }, []);
 
+  const handleClear = useCallback(() => {
+    setValue('');
+    dispatch(getEstoques());
+  }, [dispatch]);
+
   return (
     <VerticalContainer style={{ paddingTop: '2rem' }}>
       <h1>Ver Estoques</h1>
@@ -196,11 +201,12 @@ function SearchEstoque() {
           InputLabelProps={{ shrink: true }}
           fullWidth
           sx={{ width: 400 }}
+          value={value}
         />
         <Button onClick={handleSearch} variant="contained">
           Buscar
         </Button>
-        <Button onClick={() => dispatch(getEstoques())} variant="contained" color="error">
+        <Button onClick={handleClear} variant="contained" color="error">
           Limpar
         </Button>
       </HorizontalContainer>

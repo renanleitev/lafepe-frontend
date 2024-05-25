@@ -85,6 +85,11 @@ function SearchRegistro() {
     }
   }, []);
 
+  const handleClear = useCallback(() => {
+    setValue('');
+    dispatch(getRegistros());
+  }, [dispatch]);
+
   return (
     <VerticalContainer style={{ paddingTop: '2rem' }}>
       <h1>Ver Registros</h1>
@@ -129,11 +134,12 @@ function SearchRegistro() {
           InputLabelProps={{ shrink: true }}
           fullWidth
           sx={{ width: 400 }}
+          value={value}
         />
         <Button onClick={handleSearch} variant="contained">
           Buscar
         </Button>
-        <Button onClick={() => dispatch(getRegistros())} variant="contained" color="error">
+        <Button onClick={handleClear} variant="contained" color="error">
           Limpar
         </Button>
       </HorizontalContainer>

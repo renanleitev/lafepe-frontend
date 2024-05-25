@@ -212,7 +212,7 @@ export const searchEstoqueByDescricao = createAsyncThunk(
   'estoques/searchEstoqueByDescricao',
   async (descricao) => {
     try {
-      const url = `/${baseEstoquesURL}/query?descricao=${descricao}`;
+      const url = `${baseEstoquesURL}/query?descricao=${descricao}`;
       const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) { return error.message; }

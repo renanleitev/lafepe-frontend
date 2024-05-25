@@ -89,6 +89,11 @@ function SearchProduto() {
     }
   }, [option, dispatch, value, operador]);
 
+  const handleClear = useCallback(() => {
+    setValue('');
+    dispatch(getProdutos());
+  }, [dispatch]);
+
   return (
     <VerticalContainer style={{ paddingTop: '2rem' }}>
       <h1>Ver Produtos</h1>
@@ -133,11 +138,12 @@ function SearchProduto() {
           InputLabelProps={{ shrink: true }}
           fullWidth
           sx={{ width: 400 }}
+          value={value}
         />
         <Button onClick={handleSearch} variant="contained">
           Buscar
         </Button>
-        <Button onClick={() => dispatch(getProdutos())} variant="contained" color="error">
+        <Button onClick={handleClear} variant="contained" color="error">
           Limpar
         </Button>
       </HorizontalContainer>

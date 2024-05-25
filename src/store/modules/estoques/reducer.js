@@ -33,6 +33,7 @@ const initialState = {
   estoquesNegativos: [],
   estoquesPositivos: [],
   estoquesPrejuizoSaldoAtual: 0,
+  estoquesPeriodo: [],
 };
 
 export const getEstoques = createAsyncThunk(
@@ -148,6 +149,17 @@ export const getEstoqueByPrejuizoSaldoAtual = createAsyncThunk(
   async () => {
     try {
       const url = `${baseEstoquesURL}/validade/prejuizo/saldoAtual`;
+      const response = await axiosInstance.get(url);
+      return response.data;
+    } catch (error) { return error.message; }
+  },
+);
+
+export const getEstoqueByPeriodo = createAsyncThunk(
+  'estoques/getEstoqueByPeriodo',
+  async ({ option, dataInicio, dataLimite }) => {
+    try {
+      const url = `${baseEstoquesURL}/validade/${option}/periodo/${dataInicio}/${dataLimite}`;
       const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) { return error.message; }
@@ -462,6 +474,19 @@ export const estoquesSlice = createSlice({
         state.status = fetchStatus.PENDING;
       })
       .addCase(getEstoqueByValidadePeriodo.rejected, (state, action) => {
+        state.status = fetchStatus.FAILURE;
+        state.error = action.error.message;
+      })
+
+    // getEstoqueByPeriodo
+      .addCase(getEstoqueByPeriodo.fulfilled, (state, action) => {
+        state.estoquesPeriodo = action.payload;
+        state.status = fetchStatus.SUCCESS;
+      })
+      .addCase(getEstoqueByPeriodo.pending, (state) => {
+        state.status = fetchStatus.PENDING;
+      })
+      .addCase(getEstoqueByPeriodo.rejected, (state, action) => {
         state.status = fetchStatus.FAILURE;
         state.error = action.error.message;
       })

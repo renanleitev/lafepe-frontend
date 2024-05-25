@@ -27,7 +27,10 @@ function DashboardWindow({ title, quantity, link }) {
 
 DashboardWindow.propTypes = {
   title: PropTypes.string.isRequired,
-  quantity: PropTypes.number.isRequired,
+  quantity: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]).isRequired,
   link: PropTypes.string.isRequired,
 };
 

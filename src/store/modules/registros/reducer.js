@@ -23,6 +23,10 @@ export const initialRegistro = {
   registrosSaidaQuantidade: [],
   registrosEntradaQuarentena: [],
   registrosSaidaQuarentena: [],
+  registroLoteEntradaQuantidade: [],
+  registroLoteSaidaQuantidade: [],
+  registroLoteEntradaQuarentena: [],
+  registroLoteSaidaQuarentena: [],
 };
 
 // Para a requisição POST
@@ -169,6 +173,50 @@ export const getRegistroBySaidaQuantidade = createAsyncThunk(
   async ({ dataInicio, dataLimite }) => {
     try {
       const url = `${baseRegistrosURL}/quantidade/saida/periodo/${dataInicio}/${dataLimite}`;
+      const response = await axiosInstance.get(url);
+      return response.data;
+    } catch (error) { return error.message; }
+  },
+);
+
+export const getRegistroByLoteEntradaQuantidade = createAsyncThunk(
+  'registros/getRegistroByLoteEntradaQuantidade',
+  async ({ lote, dataInicio, dataLimite }) => {
+    try {
+      const url = `${baseRegistrosURL}/quantidade/entrada/lote/${lote}/periodo/${dataInicio}/${dataLimite}`;
+      const response = await axiosInstance.get(url);
+      return response.data;
+    } catch (error) { return error.message; }
+  },
+);
+
+export const getRegistroByLoteSaidaQuantidade = createAsyncThunk(
+  'registros/getRegistroByLoteSaidaQuantidade',
+  async ({ lote, dataInicio, dataLimite }) => {
+    try {
+      const url = `${baseRegistrosURL}/quantidade/saida/lote/${lote}/periodo/${dataInicio}/${dataLimite}`;
+      const response = await axiosInstance.get(url);
+      return response.data;
+    } catch (error) { return error.message; }
+  },
+);
+
+export const getRegistroByLoteEntradaQuarentena = createAsyncThunk(
+  'registros/getRegistroByLoteEntradaQuarentena',
+  async ({ lote, dataInicio, dataLimite }) => {
+    try {
+      const url = `${baseRegistrosURL}/quarentena/entrada/lote/${lote}/periodo/${dataInicio}/${dataLimite}`;
+      const response = await axiosInstance.get(url);
+      return response.data;
+    } catch (error) { return error.message; }
+  },
+);
+
+export const getRegistroByLoteSaidaQuarentena = createAsyncThunk(
+  'registros/getRegistroByLoteSaidaQuarentena',
+  async ({ lote, dataInicio, dataLimite }) => {
+    try {
+      const url = `${baseRegistrosURL}/quarentena/saida/lote/${lote}/periodo/${dataInicio}/${dataLimite}`;
       const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) { return error.message; }
@@ -334,6 +382,58 @@ export const registrosSlice = createSlice({
         state.status = fetchStatus.PENDING;
       })
       .addCase(getRegistroBySaidaQuantidade.rejected, (state, action) => {
+        state.status = fetchStatus.FAILURE;
+        state.error = action.error.message || 'Something went wrong';
+      })
+
+    // getRegistroByLoteEntradaQuantidade
+      .addCase(getRegistroByLoteEntradaQuantidade.fulfilled, (state, action) => {
+        state.registroLoteEntradaQuantidade = action.payload;
+        state.status = fetchStatus.SUCCESS;
+      })
+      .addCase(getRegistroByLoteEntradaQuantidade.pending, (state) => {
+        state.status = fetchStatus.PENDING;
+      })
+      .addCase(getRegistroByLoteEntradaQuantidade.rejected, (state, action) => {
+        state.status = fetchStatus.FAILURE;
+        state.error = action.error.message || 'Something went wrong';
+      })
+
+    // getRegistroByLoteSaidaQuantidade
+      .addCase(getRegistroByLoteSaidaQuantidade.fulfilled, (state, action) => {
+        state.registroLoteSaidaQuantidade = action.payload;
+        state.status = fetchStatus.SUCCESS;
+      })
+      .addCase(getRegistroByLoteSaidaQuantidade.pending, (state) => {
+        state.status = fetchStatus.PENDING;
+      })
+      .addCase(getRegistroByLoteSaidaQuantidade.rejected, (state, action) => {
+        state.status = fetchStatus.FAILURE;
+        state.error = action.error.message || 'Something went wrong';
+      })
+
+    // getRegistroByLoteEntradaQuarentena
+      .addCase(getRegistroByLoteEntradaQuarentena.fulfilled, (state, action) => {
+        state.registroLoteEntradaQuarentena = action.payload;
+        state.status = fetchStatus.SUCCESS;
+      })
+      .addCase(getRegistroByLoteEntradaQuarentena.pending, (state) => {
+        state.status = fetchStatus.PENDING;
+      })
+      .addCase(getRegistroByLoteEntradaQuarentena.rejected, (state, action) => {
+        state.status = fetchStatus.FAILURE;
+        state.error = action.error.message || 'Something went wrong';
+      })
+
+    // getRegistroByLoteSaidaQuarentena
+      .addCase(getRegistroByLoteSaidaQuarentena.fulfilled, (state, action) => {
+        state.registroLoteSaidaQuarentena = action.payload;
+        state.status = fetchStatus.SUCCESS;
+      })
+      .addCase(getRegistroByLoteSaidaQuarentena.pending, (state) => {
+        state.status = fetchStatus.PENDING;
+      })
+      .addCase(getRegistroByLoteSaidaQuarentena.rejected, (state, action) => {
         state.status = fetchStatus.FAILURE;
         state.error = action.error.message || 'Something went wrong';
       });

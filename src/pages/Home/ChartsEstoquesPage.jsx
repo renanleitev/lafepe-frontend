@@ -7,6 +7,7 @@ import {
 } from '../../store/modules/estoques/reducer';
 import getLastAndNextYears from '../../hooks/getLastAndNextYears';
 import { HorizontalContainer } from '../../config/GlobalStyle';
+import getMonths from '../../hooks/getMonths';
 
 export default function ChartsEstoquesPage() {
   const dispatch = useDispatch();
@@ -26,8 +27,6 @@ export default function ChartsEstoquesPage() {
   useEffect(() => {
     dispatch(getEstoqueByPeriodo({ option, dataInicio, dataLimite }));
   }, [dataInicio, dataLimite, dispatch, option]);
-
-  const months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
 
   const series = [{ data: estoquesPeriodo, color }];
 
@@ -94,7 +93,7 @@ export default function ChartsEstoquesPage() {
       </HorizontalContainer>
       <DashboardChart
         series={series}
-        labels={months}
+        labels={getMonths()}
       />
     </>
   );

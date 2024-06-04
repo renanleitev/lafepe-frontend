@@ -1,4 +1,4 @@
-import { Pagination, Box } from '@mui/material';
+import { Pagination } from '@mui/material';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import ChartsEstoquesPage from './ChartsEstoquesPage';
@@ -27,10 +27,8 @@ export default function HomePage() {
   const [page, setPage] = useState(1);
 
   return (
-    <VerticalContainer style={{ paddingTop: '2rem', paddingBottom: '4rem' }}>
-      <Box sx={{ height: '70vh' }}>
-        <RenderPage page={page} />
-      </Box>
+    <VerticalContainer style={{ paddingTop: '2rem', justifyContent: 'space-between', height: '90%' }}>
+      <RenderPage page={page} />
       <Pagination count={3} page={page} onChange={(e, value) => setPage(value)} />
     </VerticalContainer>
   );

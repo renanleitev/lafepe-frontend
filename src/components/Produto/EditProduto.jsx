@@ -37,6 +37,8 @@ function EditProduto() {
     setOption(event.target.value);
   }, []);
 
+  const inputWidth = 630;
+
   return (
     <StyledContainer>
       <Form onSubmit={handleSubmit}>
@@ -73,21 +75,14 @@ function EditProduto() {
             setData={setProduto}
             label="Código"
             keyName="codigo"
-            inputWidth={630}
+            inputWidth={inputWidth}
           />
           <Input
             data={produto}
             setData={setProduto}
             label="Nome"
             keyName="nome"
-            inputWidth={630}
-          />
-          <Input
-            data={produto}
-            setData={setProduto}
-            label="Fabricante"
-            keyName="fabricante"
-            inputWidth={630}
+            inputWidth={inputWidth}
           />
           <Input
             data={produto}
@@ -95,7 +90,15 @@ function EditProduto() {
             label="Preço Unitário"
             keyName="precoUnitario"
             keyType={InputType.NUMBER}
-            inputWidth={630}
+            inputWidth={inputWidth}
+          />
+          <Input
+            data={produto}
+            setData={setProduto}
+            label="Descrição"
+            keyName="descricao"
+            keyType={InputType.TEXTAREA}
+            inputWidth={inputWidth}
           />
         </>
       )}

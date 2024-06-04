@@ -72,13 +72,6 @@ function CreateEstoque() {
             keyName="validade"
             keyType={InputType.DATE}
           />
-          <Input
-            data={estoque}
-            setData={setEstoque}
-            label="Descrição"
-            keyName="descricao"
-            keyType={InputType.TEXTAREA}
-          />
         </>
         )}
       </Form>

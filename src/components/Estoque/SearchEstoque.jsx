@@ -6,7 +6,6 @@ import convertObjectToArray from '../../hooks/convertObjectToArray';
 import {
   getEstoques,
   searchEstoqueByLote,
-  searchEstoqueByDescricao,
   searchEstoqueByQuantidade,
   searchEstoqueByQuarentena,
   searchEstoqueBySaldoAtual,
@@ -110,9 +109,6 @@ function SearchEstoque() {
       case 'Validade':
         dispatch(searchEstoqueByValidade({ validade: convertDate(value), operador }));
         break;
-      case 'Descrição':
-        dispatch(searchEstoqueByDescricao(value));
-        break;
       case 'Quantidade':
         dispatch(searchEstoqueByQuantidade({ quantidade: value, operador }));
         break;
@@ -142,8 +138,6 @@ function SearchEstoque() {
       case 'Validade':
         return 'date';
       case 'Lote':
-        return 'text';
-      case 'Descrição':
         return 'text';
       case 'Unidade':
         return 'text';

@@ -7,7 +7,7 @@ import {
   getProdutos,
   searchProdutoByNome,
   searchProdutoByCodigo,
-  searchProdutoByFabricante,
+  searchProdutoByDescricao,
   searchProdutoByPrecoUnitario,
 } from '../../store/modules/produtos/reducer';
 import { VerticalContainer, HorizontalContainer } from '../../config/GlobalStyle';
@@ -34,8 +34,8 @@ function SearchProduto() {
       label: 'Código',
     },
     {
-      value: 'Fabricante',
-      label: 'Fabricante',
+      value: 'Descrição',
+      label: 'Descrição',
     },
     {
       value: 'Preço Unitário',
@@ -78,8 +78,8 @@ function SearchProduto() {
       case 'Código':
         dispatch(searchProdutoByCodigo(value));
         break;
-      case 'Fabricante':
-        dispatch(searchProdutoByFabricante(value));
+      case 'Descrição':
+        dispatch(searchProdutoByDescricao(value));
         break;
       case 'Preço Unitário':
         dispatch(searchProdutoByPrecoUnitario({ precoUnitario: value, operador }));

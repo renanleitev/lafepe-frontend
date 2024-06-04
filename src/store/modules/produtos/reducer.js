@@ -8,7 +8,7 @@ export const initialProduto = {
   id: '',
   codigo: '',
   nome: '',
-  fabricante: '',
+  descricao: '',
   precoUnitario: 0,
 };
 
@@ -16,7 +16,7 @@ export const initialProduto = {
 export const initialProdutoForPostAPI = {
   codigo: '',
   nome: '',
-  fabricante: '',
+  descricao: '',
   precoUnitario: 0,
 };
 
@@ -106,11 +106,11 @@ export const searchProdutoByCodigo = createAsyncThunk(
   },
 );
 
-export const searchProdutoByFabricante = createAsyncThunk(
-  'produtos/searchProdutoByFabricante',
-  async (fabricante) => {
+export const searchProdutoByDescricao = createAsyncThunk(
+  'produtos/searchProdutoByDescricao',
+  async (descricao) => {
     try {
-      const url = `${baseProdutosURL}/query?fabricante=${fabricante}`;
+      const url = `${baseProdutosURL}/query?descricao=${descricao}`;
       const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) { return error.message; }
@@ -242,12 +242,12 @@ export const produtosSlice = createSlice({
         state.error = action.error.message || 'Algo deu errado';
       })
       // Fabricante
-      .addCase(searchProdutoByFabricante.fulfilled, (state, action) => {
+      .addCase(searchProdutoByDescricao.fulfilled, (state, action) => {
         state.status = fetchStatus.SUCCESS;
         state.produtos = action.payload;
       })
-      .addCase(searchProdutoByFabricante.pending, (state) => { state.status = 'loading'; })
-      .addCase(searchProdutoByFabricante.rejected, (state, action) => {
+      .addCase(searchProdutoByDescricao.pending, (state) => { state.status = 'loading'; })
+      .addCase(searchProdutoByDescricao.rejected, (state, action) => {
         state.status = fetchStatus.FAILURE;
         state.error = action.error.message || 'Algo deu errado';
       });

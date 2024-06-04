@@ -38,28 +38,16 @@ function Row(props) {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row" width={columnWidth}>
-          {row.entradaQuantidade}
+          {row.entrada}
         </TableCell>
         <TableCell component="th" scope="row" width={columnWidth}>
-          {row.saidaQuantidade}
+          {row.saida}
         </TableCell>
         <TableCell component="th" scope="row" width={columnWidth}>
-          {row.saldoQuantidadeInicial}
+          {row.saldoInicial}
         </TableCell>
         <TableCell component="th" scope="row" width={columnWidth}>
-          {row.saldoQuantidadeFinal}
-        </TableCell>
-        <TableCell component="th" scope="row" width={columnWidth}>
-          {row.entradaQuarentena}
-        </TableCell>
-        <TableCell component="th" scope="row" width={columnWidth}>
-          {row.saidaQuarentena}
-        </TableCell>
-        <TableCell component="th" scope="row" width={columnWidth}>
-          {row.saldoQuarentenaInicial}
-        </TableCell>
-        <TableCell component="th" scope="row" width={columnWidth}>
-          {row.saldoQuarentenaFinal}
+          {row.saldoFinal}
         </TableCell>
         <TableCell component="th" scope="row" width={columnWidth}>
           {convertDate(row.data)}
@@ -81,11 +69,9 @@ function Row(props) {
                     <TableCell>Unidade</TableCell>
                     <TableCell>Saldo Atual</TableCell>
                     <TableCell>Saldo Original</TableCell>
-                    <TableCell>Descrição</TableCell>
                     <TableCell>Validade</TableCell>
                     <TableCell>Código</TableCell>
                     <TableCell>Nome</TableCell>
-                    <TableCell>Fabricante</TableCell>
                     <TableCell align="right">Preço Unitário (R$)</TableCell>
                   </TableRow>
                 </TableHead>
@@ -110,9 +96,6 @@ function Row(props) {
                       {row.estoque.saldoOriginal}
                     </TableCell>
                     <TableCell component="th" scope="row">
-                      {row.estoque.descricao}
-                    </TableCell>
-                    <TableCell component="th" scope="row">
                       <Box sx={{ color: getColorByExpirationDate(row.estoque.validade) }}>
                         {convertDate(row.estoque.validade)}
                       </Box>
@@ -122,9 +105,6 @@ function Row(props) {
                     </TableCell>
                     <TableCell component="th" scope="row">
                       {row.estoque.produto.nome}
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      {row.estoque.produto.fabricante}
                     </TableCell>
                     <TableCell component="th" scope="row" align="right">
                       {row.estoque.produto.precoUnitario}
@@ -143,30 +123,24 @@ function Row(props) {
 Row.propTypes = {
   row: PropTypes.shape(
     {
-      entradaQuarentena: PropTypes.number.isRequired,
-      saidaQuarentena: PropTypes.number.isRequired,
-      saldoQuarentenaInicial: PropTypes.number.isRequired,
-      saldoQuarentenaFinal: PropTypes.number.isRequired,
-      entradaQuantidade: PropTypes.number.isRequired,
-      saidaQuantidade: PropTypes.number.isRequired,
-      saldoQuantidadeInicial: PropTypes.number.isRequired,
-      saldoQuantidadeFinal: PropTypes.number.isRequired,
+      entrada: PropTypes.number.isRequired,
+      saida: PropTypes.number.isRequired,
+      saldoInicial: PropTypes.number.isRequired,
+      saldoFinal: PropTypes.number.isRequired,
       data: PropTypes.string.isRequired,
       estoque: {
         lote: PropTypes.string.isRequired,
         quantidade: PropTypes.number.isRequired,
-        quarentena: PropTypes.number.isRequired,
         unidade: PropTypes.string.isRequired,
         saldoAtual: PropTypes.number.isRequired,
         saldoOriginal: PropTypes.number.isRequired,
         validade: PropTypes.string.isRequired,
-        descricao: PropTypes.string.isRequired,
         produto: PropTypes.shape({
           codigo: PropTypes.string.isRequired,
           nome: PropTypes.string.isRequired,
-          fabricante: PropTypes.string.isRequired,
+          descricao: PropTypes.string.isRequired,
           precoUnitario: PropTypes.number.isRequired,
-        }).isRequired,
+        }),
       },
     },
   ).isRequired,
@@ -194,14 +168,10 @@ function RegistrosTable({ registros, isLoading }) {
               <TableHead>
                 <TableRow>
                   <TableCell>Lote</TableCell>
-                  <TableCell>Entrada Quantidade</TableCell>
-                  <TableCell>Saída Quantidade</TableCell>
-                  <TableCell>Quantidade Inicial</TableCell>
-                  <TableCell>Quantidade Final</TableCell>
-                  <TableCell>Entrada Quarentena</TableCell>
-                  <TableCell>Saída Quarentena</TableCell>
-                  <TableCell>Quarentena Inicial</TableCell>
-                  <TableCell>Quarentena Final</TableCell>
+                  <TableCell>Entrada</TableCell>
+                  <TableCell>Saída</TableCell>
+                  <TableCell>Saldo Inicial</TableCell>
+                  <TableCell>Saldo Final</TableCell>
                   <TableCell>Data</TableCell>
                 </TableRow>
               </TableHead>
@@ -241,14 +211,10 @@ RegistrosTable.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   registros: PropTypes.arrayOf(PropTypes.shape(
     {
-      entradaQuarentena: PropTypes.number.isRequired,
-      saidaQuarentena: PropTypes.number.isRequired,
-      saldoQuarentenaInicial: PropTypes.number.isRequired,
-      saldoQuarentenaFinal: PropTypes.number.isRequired,
-      entradaQuantidade: PropTypes.number.isRequired,
-      saidaQuantidade: PropTypes.number.isRequired,
-      saldoQuantidadeInicial: PropTypes.number.isRequired,
-      saldoQuantidadeFinal: PropTypes.number.isRequired,
+      entrada: PropTypes.number.isRequired,
+      saida: PropTypes.number.isRequired,
+      saldoInicial: PropTypes.number.isRequired,
+      saldoFinal: PropTypes.number.isRequired,
       estoque: {
         lote: PropTypes.string.isRequired,
         quantidade: PropTypes.number.isRequired,
@@ -256,11 +222,10 @@ RegistrosTable.propTypes = {
         saldoAtual: PropTypes.number.isRequired,
         saldoOriginal: PropTypes.number.isRequired,
         validade: PropTypes.string.isRequired,
-        descricao: PropTypes.string.isRequired,
         produto: PropTypes.shape({
           codigo: PropTypes.string.isRequired,
           nome: PropTypes.string.isRequired,
-          fabricante: PropTypes.string.isRequired,
+          descricao: PropTypes.string.isRequired,
           precoUnitario: PropTypes.number.isRequired,
         }),
       },

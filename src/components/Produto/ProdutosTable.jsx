@@ -24,7 +24,7 @@ function Row(props) {
         {row.nome}
       </TableCell>
       <TableCell component="th" scope="row" width="10%">
-        {row.fabricante}
+        {row.descricao}
       </TableCell>
       <TableCell component="th" scope="row" align="right" width="10%">
         {row.precoUnitario}
@@ -38,7 +38,7 @@ Row.propTypes = {
     {
       codigo: PropTypes.string.isRequired,
       nome: PropTypes.string.isRequired,
-      fabricante: PropTypes.string.isRequired,
+      descricao: PropTypes.string.isRequired,
       precoUnitario: PropTypes.number.isRequired,
     },
   ).isRequired,
@@ -66,7 +66,7 @@ function ProdutosTable({ produtos, isLoading }) {
                 <TableRow>
                   <TableCell>Código</TableCell>
                   <TableCell>Nome</TableCell>
-                  <TableCell>Fabricante</TableCell>
+                  <TableCell>Descrição</TableCell>
                   <TableCell align="right">Preço Unitário (R$)</TableCell>
                 </TableRow>
               </TableHead>
@@ -107,7 +107,7 @@ ProdutosTable.propTypes = {
     {
       codigo: PropTypes.string.isRequired,
       nome: PropTypes.string.isRequired,
-      fabricante: PropTypes.string.isRequired,
+      descricao: PropTypes.string.isRequired,
       precoUnitario: PropTypes.number.isRequired,
     },
   )).isRequired,

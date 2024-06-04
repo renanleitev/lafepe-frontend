@@ -37,15 +37,16 @@ function CreateProduto() {
         <Input
           data={produto}
           setData={setProduto}
-          label="Fabricante"
-          keyName="fabricante"
+          label="Preço Unitário"
+          keyName="precoUnitario"
+          keyType={InputType.NUMBER}
         />
         <Input
           data={produto}
           setData={setProduto}
-          label="Preço Unitário"
-          keyName="precoUnitario"
-          keyType={InputType.NUMBER}
+          label="Descrição"
+          keyName="descricao"
+          keyType={InputType.TEXTAREA}
         />
         <button type="submit">CRIAR</button>
       </Form>

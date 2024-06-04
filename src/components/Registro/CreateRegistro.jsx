@@ -1,7 +1,7 @@
 import { useCallback, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Autocomplete, TextField } from '@mui/material';
-import { StyledContainer, Form, HorizontalContainer } from '../../config/GlobalStyle';
+import { StyledContainer, Form, VerticalContainer } from '../../config/GlobalStyle';
 import Input, { InputType } from '../Input/Input';
 import { createRegistro, initialRegistroForPostAPI } from '../../store/modules/registros/reducer';
 import validationObject from '../../hooks/validationObject';
@@ -28,13 +28,13 @@ function Createregistro() {
     }
   }, [dispatch, estoque?.id, registro]);
 
-  const inputWidth = 300;
+  const inputWidth = 400;
 
   return (
     <StyledContainer>
       <Form onSubmit={handleSubmit}>
         <h1>Criar Registro</h1>
-        <HorizontalContainer>
+        <VerticalContainer>
           <Autocomplete
             freeSolo
             disablePortal
@@ -46,63 +46,41 @@ function Createregistro() {
             renderInput={(params) => <TextField {...params} label="Lote" />}
             disabled={estoques.length === 0}
           />
-          <button type="submit">CRIAR</button>
-        </HorizontalContainer>
+        </VerticalContainer>
         {estoque
         && (
-          <>
-            <HorizontalContainer>
-              <Input
-                data={registro}
-                setData={setRegistro}
-                label="Entrada Quarentena"
-                keyName="entradaQuarentena"
-                keyType={InputType.NUMBER}
-                inputWidth={inputWidth}
-              />
-              <Input
-                data={registro}
-                setData={setRegistro}
-                label="Saida Quarentena"
-                keyName="saidaQuarentena"
-                keyType={InputType.NUMBER}
-                inputWidth={inputWidth}
-              />
-              <TextField
-                type="number"
-                label="Quarentena"
-                value={estoque.quarentena + registro.entradaQuarentena - registro.saidaQuarentena}
-                InputLabelProps={{ shrink: true }}
-                disabled
-              />
-            </HorizontalContainer>
-            <HorizontalContainer>
-              <Input
-                data={registro}
-                setData={setRegistro}
-                label="Entrada Quantidade"
-                keyName="entradaQuantidade"
-                keyType={InputType.NUMBER}
-                inputWidth={inputWidth}
-              />
-              <Input
-                data={registro}
-                setData={setRegistro}
-                label="Saida Quantidade"
-                keyName="saidaQuantidade"
-                keyType={InputType.NUMBER}
-                inputWidth={inputWidth}
-              />
-              <TextField
-                type="number"
-                label="Quantidade"
-                value={estoque.quantidade + registro.entradaQuantidade - registro.saidaQuantidade}
-                InputLabelProps={{ shrink: true }}
-                disabled
-              />
-            </HorizontalContainer>
-          </>
+          <VerticalContainer>
+            <Input
+              data={registro}
+              setData={setRegistro}
+              label="Entrada"
+              keyName="entrada"
+              keyType={InputType.NUMBER}
+              inputWidth={inputWidth}
+            />
+            <Input
+              data={registro}
+              setData={setRegistro}
+              label="Saida"
+              keyName="saida"
+              keyType={InputType.NUMBER}
+              inputWidth={inputWidth}
+            />
+            <TextField
+              type="number"
+              label="Saldo"
+              value={
+                Number.parseInt(estoque.saldoAtual, 10)
+              + Number.parseInt(registro.entrada, 10)
+              - Number.parseInt(registro.saida, 10)
+              }
+              InputLabelProps={{ shrink: true }}
+              sx={{ width: 400 }}
+              disabled
+            />
+          </VerticalContainer>
         )}
+        <button type="submit">CRIAR</button>
       </Form>
     </StyledContainer>
   );

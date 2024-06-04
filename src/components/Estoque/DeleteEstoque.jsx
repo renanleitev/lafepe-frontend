@@ -78,14 +78,6 @@ function DeleteEstoque() {
           keyType={InputType.DATE}
           disabled
         />
-        <Input
-          data={estoque}
-          setData={setEstoque}
-          label="Descrição"
-          keyName="descricao"
-          keyType={InputType.TEXTAREA}
-          disabled
-        />
       </Form>
       )}
     </StyledContainer>

@@ -16,7 +16,6 @@ export const initialEstoque = {
   saldoOriginal: 0,
   precoUnitario: 0,
   validade: getCurrentDateFormatted(),
-  descricao: '',
   produtoId: initialProduto.id,
   produto: initialProduto,
 };
@@ -226,17 +225,6 @@ export const searchEstoqueByLote = createAsyncThunk(
   async (lote) => {
     try {
       const url = `${baseEstoquesURL}/query?lote=${lote}`;
-      const response = await axiosInstance.get(url);
-      return response.data;
-    } catch (error) { return error.message; }
-  },
-);
-
-export const searchEstoqueByDescricao = createAsyncThunk(
-  'estoques/searchEstoqueByDescricao',
-  async (descricao) => {
-    try {
-      const url = `${baseEstoquesURL}/query?descricao=${descricao}`;
       const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) { return error.message; }
@@ -539,19 +527,6 @@ export const estoquesSlice = createSlice({
         state.status = fetchStatus.PENDING;
       })
       .addCase(searchEstoqueByLote.rejected, (state, action) => {
-        state.status = fetchStatus.FAILURE;
-        state.error = action.error.message || 'Something went wrong';
-      })
-
-    // searchEstoqueByDescricao
-      .addCase(searchEstoqueByDescricao.fulfilled, (state, action) => {
-        state.estoques = action.payload;
-        state.status = fetchStatus.SUCCESS;
-      })
-      .addCase(searchEstoqueByDescricao.pending, (state) => {
-        state.status = fetchStatus.PENDING;
-      })
-      .addCase(searchEstoqueByDescricao.rejected, (state, action) => {
         state.status = fetchStatus.FAILURE;
         state.error = action.error.message || 'Something went wrong';
       })

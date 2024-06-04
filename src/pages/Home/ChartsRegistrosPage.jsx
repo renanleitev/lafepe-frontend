@@ -14,14 +14,10 @@ import DashboardChart from '../../components/Dashboard/DashboardChart';
 import getLastAndNextYears from '../../hooks/getLastAndNextYears';
 import { HorizontalContainer } from '../../config/GlobalStyle';
 import {
-  getRegistroByEntradaQuantidade,
-  getRegistroBySaidaQuantidade,
-  getRegistroByEntradaQuarentena,
-  getRegistroBySaidaQuarentena,
-  getRegistroByLoteEntradaQuantidade,
-  getRegistroByLoteSaidaQuantidade,
-  getRegistroByLoteEntradaQuarentena,
-  getRegistroByLoteSaidaQuarentena,
+  getRegistroByEntrada,
+  getRegistroBySaida,
+  getRegistroByLoteEntrada,
+  getRegistroByLoteSaida,
 } from '../../store/modules/registros/reducer';
 import convertObjectToArray from '../../hooks/convertObjectToArray';
 import convertOptions from '../../hooks/convertOptions';
@@ -30,36 +26,20 @@ import getMonths from '../../hooks/getMonths';
 export default function ChartsRegistrosPage() {
   const dispatch = useDispatch();
 
-  const registrosEntradaQuantidade = useSelector(
-    (state) => (state.registros.registrosEntradaQuantidade),
+  const registrosEntrada = useSelector(
+    (state) => (state.registros.registrosEntrada),
   ) || [];
 
-  const registrosSaidaQuantidade = useSelector(
-    (state) => (state.registros.registrosSaidaQuantidade),
+  const registrosSaida = useSelector(
+    (state) => (state.registros.registrosSaida),
   ) || [];
 
-  const registrosEntradaQuarentena = useSelector(
-    (state) => (state.registros.registrosEntradaQuarentena),
+  const registroLoteEntrada = useSelector(
+    (state) => (state.registros.registroLoteEntrada),
   ) || [];
 
-  const registrosSaidaQuarentena = useSelector(
-    (state) => (state.registros.registrosSaidaQuarentena),
-  ) || [];
-
-  const registroLoteEntradaQuantidade = useSelector(
-    (state) => (state.registros.registroLoteEntradaQuantidade),
-  ) || [];
-
-  const registroLoteSaidaQuantidade = useSelector(
-    (state) => (state.registros.registroLoteSaidaQuantidade),
-  ) || [];
-
-  const registroLoteEntradaQuarentena = useSelector(
-    (state) => (state.registros.registroLoteEntradaQuarentena),
-  ) || [];
-
-  const registroLoteSaidaQuarentena = useSelector(
-    (state) => (state.registros.registroLoteSaidaQuarentena),
+  const registroLoteSaida = useSelector(
+    (state) => (state.registros.registroLoteSaida),
   ) || [];
 
   const estoques = convertObjectToArray(useSelector((state) => state.estoques.estoques)) || [];
@@ -70,74 +50,35 @@ export default function ChartsRegistrosPage() {
   const dataInicio = `${ano}-01-01`;
   const dataLimite = `${ano}-12-30`;
 
-  const [option, setOption] = useState('quarentena');
   const [optionRegistro, setOptionRegistro] = useState('geral');
 
   useEffect(() => {
     if (optionRegistro === 'geral') {
-      if (option === 'quarentena') {
-        dispatch(getRegistroByEntradaQuarentena({ dataInicio, dataLimite }));
-        dispatch(getRegistroBySaidaQuarentena({ dataInicio, dataLimite }));
-      } else if (option === 'quantidade') {
-        dispatch(getRegistroByEntradaQuantidade({ dataInicio, dataLimite }));
-        dispatch(getRegistroBySaidaQuantidade({ dataInicio, dataLimite }));
-      }
+      dispatch(getRegistroByEntrada({ dataInicio, dataLimite }));
+      dispatch(getRegistroBySaida({ dataInicio, dataLimite }));
     } else if (optionRegistro === 'lote') {
-      if (option === 'quarentena' && estoque) {
-        dispatch(getRegistroByLoteEntradaQuarentena(
-          { dataInicio, dataLimite, lote: estoque?.lote },
-        ));
-        dispatch(getRegistroByLoteSaidaQuarentena(
-          { dataInicio, dataLimite, lote: estoque?.lote },
-        ));
-      } else if (option === 'quantidade') {
-        dispatch(getRegistroByLoteEntradaQuantidade(
-          { dataInicio, dataLimite, lote: estoque?.lote },
-        ));
-        dispatch(getRegistroByLoteSaidaQuantidade(
-          { dataInicio, dataLimite, lote: estoque?.lote },
-        ));
-      }
+      dispatch(getRegistroByLoteEntrada(
+        { dataInicio, dataLimite, lote: estoque?.lote },
+      ));
+      dispatch(getRegistroByLoteSaida(
+        { dataInicio, dataLimite, lote: estoque?.lote },
+      ));
     }
-  }, [dataInicio, dataLimite, dispatch, estoque, estoque?.lote, option, optionRegistro]);
+  }, [dataInicio, dataLimite, dispatch, estoque, estoque?.lote, optionRegistro]);
 
-  const seriesQuarentena = [
-    { data: registrosEntradaQuarentena, color: 'green', label: 'Entrada' },
-    { data: registrosSaidaQuarentena, color: 'red', label: 'Saída' },
+  const seriesGeral = [
+    { data: registrosEntrada, color: 'green', label: 'Entrada' },
+    { data: registrosSaida, color: 'red', label: 'Saída' },
   ];
 
-  const seriesQuantidade = [
-    { data: registrosEntradaQuantidade, color: 'green', label: 'Entrada' },
-    { data: registrosSaidaQuantidade, color: 'red', label: 'Saída' },
+  const seriesLote = [
+    { data: registroLoteEntrada, color: 'green', label: 'Entrada' },
+    { data: registroLoteSaida, color: 'red', label: 'Saída' },
   ];
 
-  const seriesLoteQuarentena = [
-    { data: registroLoteEntradaQuarentena, color: 'green', label: 'Entrada' },
-    { data: registroLoteSaidaQuarentena, color: 'red', label: 'Saída' },
-  ];
-
-  const seriesLoteQuantidade = [
-    { data: registroLoteEntradaQuantidade, color: 'green', label: 'Entrada' },
-    { data: registroLoteSaidaQuantidade, color: 'red', label: 'Saída' },
-  ];
-
-  // eslint-disable-next-line no-nested-ternary
-  const series = optionRegistro === 'geral'
-    ? (option === 'quarentena' ? seriesQuarentena : seriesQuantidade)
-    : (option === 'quarentena' ? seriesLoteQuarentena : seriesLoteQuantidade);
+  const series = optionRegistro === 'geral' ? seriesGeral : seriesLote;
 
   const yearOptions = getLastAndNextYears(5);
-
-  const options = [
-    {
-      value: 'quarentena',
-      label: 'Quarentena',
-    },
-    {
-      value: 'quantidade',
-      label: 'Quantidade',
-    },
-  ];
 
   const handleOptionRegistro = useCallback((event) => {
     setOptionRegistro(event.target.value);
@@ -174,19 +115,6 @@ export default function ChartsRegistrosPage() {
           value={estoques[0]?.lote}
         />
         )}
-        <TextField
-          id="outlined-select-option"
-          select
-          label="Opção"
-          defaultValue={option}
-          onChange={(e) => setOption(e.target.value)}
-        >
-          {options.map((optionItem) => (
-            <MenuItem key={optionItem.value} value={optionItem.value}>
-              {optionItem.label}
-            </MenuItem>
-          ))}
-        </TextField>
         <TextField
           id="outlined-select-option"
           select

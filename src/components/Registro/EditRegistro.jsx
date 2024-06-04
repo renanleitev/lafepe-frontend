@@ -79,34 +79,16 @@ function Editregistro() {
           <Input
             data={registro}
             setData={setRegistro}
-            label="Entrada Quantidade"
-            keyName="entradaQuantidade"
+            label="Entrada"
+            keyName="entrada"
             keyType={InputType.NUMBER}
             inputWidth={inputWidth}
           />
           <Input
             data={registro}
             setData={setRegistro}
-            label="Saída Quantidade"
-            keyName="saidaQuantidade"
-            keyType={InputType.NUMBER}
-            inputWidth={inputWidth}
-          />
-        </HorizontalContainer>
-        <HorizontalContainer>
-          <Input
-            data={registro}
-            setData={setRegistro}
-            label="Entrada Quarentena"
-            keyName="entradaQuarentena"
-            keyType={InputType.NUMBER}
-            inputWidth={inputWidth}
-          />
-          <Input
-            data={registro}
-            setData={setRegistro}
-            label="Saida Quarentena"
-            keyName="saidaQuarentena"
+            label="Saida"
+            keyName="saida"
             keyType={InputType.NUMBER}
             inputWidth={inputWidth}
           />

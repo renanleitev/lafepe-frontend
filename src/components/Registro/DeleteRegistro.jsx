@@ -67,66 +67,28 @@ function DeleteRegistro() {
           <Input
             data={registro}
             setData={setRegistro}
-            label="Entrada Quarentena"
-            keyName="entradaQuarentena"
+            label="Entrada"
+            keyName="entrada"
             keyType={InputType.NUMBER}
             inputWidth={inputWidth}
-            disabled
           />
           <Input
             data={registro}
             setData={setRegistro}
-            label="Saida Quarentena"
-            keyName="saidaQuarentena"
+            label="Saida"
+            keyName="saida"
+            keyType={InputType.NUMBER}
             inputWidth={inputWidth}
-            disabled
           />
-          <Input
-            data={registro}
-            setData={setRegistro}
-            label="Saldo Quarentena Inicial"
-            keyName="saldoQuarentenaInicial"
-            inputWidth={inputWidth}
-            disabled
-          />
-          <Input
-            data={registro}
-            setData={setRegistro}
-            label="Saida Quarentena Final"
-            keyName="saldoQuarentenaFinal"
-            inputWidth={inputWidth}
-            disabled
-          />
-        </HorizontalContainer>
-        <HorizontalContainer>
-          <Input
-            data={registro}
-            setData={setRegistro}
-            label="Entrada Quantidade"
-            inputWidth={inputWidth}
-            disabled
-          />
-          <Input
-            data={registro}
-            setData={setRegistro}
-            label="Saida Quantidade"
-            inputWidth={inputWidth}
-            disabled
-          />
-          <Input
-            data={registro}
-            setData={setRegistro}
-            label="Saldo Quantidade Inicial"
-            keyName="saldoQuarentenaInicial"
-            inputWidth={inputWidth}
-            disabled
-          />
-          <Input
-            data={registro}
-            setData={setRegistro}
-            label="Saida Quantidade Final"
-            keyName="saldoQuarentenaFinal"
-            inputWidth={inputWidth}
+          <TextField
+            type="number"
+            label="Saldo"
+            value={
+                Number.parseInt(estoque.saldoAtual, 10)
+              + Number.parseInt(registro.entrada, 10)
+              - Number.parseInt(registro.saida, 10)
+              }
+            InputLabelProps={{ shrink: true }}
             disabled
           />
         </HorizontalContainer>
